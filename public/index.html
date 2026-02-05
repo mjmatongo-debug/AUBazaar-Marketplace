@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUBazaar - Africa University Marketplace</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-university text-primary"></i>
+                <span class="fw-bold text-primary">AUBazaar</span>
+                <small class="text-muted">Africa University Marketplace</small>
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse.html">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="categories.html">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> Account
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="login.html">Login</a></li>
+                            <li><a class="dropdown-item" href="register.html">Register</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="create-listing.html" class="btn btn-primary ms-2">
+                            <i class="fas fa-plus-circle"></i> Sell Item
+                        </a>
+                    </li>
+                </ul>
+                
+                <form class="d-flex ms-3">
+                    <input class="form-control me-2" type="search" placeholder="Search items...">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">Welcome to AUBazaar</h1>
+                    <p class="lead mb-4">Africa University's trusted marketplace for buying, selling, and trading goods and services among students, staff, and faculty.</p>
+                    <div class="d-flex gap-3">
+                        <a href="browse.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-shopping-cart"></i> Start Shopping
+                        </a>
+                        <a href="create-listing.html" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-tag"></i> Sell an Item
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         class="img-fluid rounded shadow" alt="University Campus">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Why Choose AUBazaar?</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="card feature-card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                            </div>
+                            <h5>Verified Users</h5>
+                            <p class="text-muted">All users verified through university email for secure transactions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-recycle fa-3x text-success"></i>
+                            </div>
+                            <h5>Promote Sustainability</h5>
+                            <p class="text-muted">Reduce waste by reusing items within our campus community.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-money-bill-wave fa-3x text-warning"></i>
+                            </div>
+                            <h5>Save Money</h5>
+                            <p class="text-muted">Find affordable textbooks, furniture, and essentials from fellow students.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card feature-card text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="feature-icon mb-3">
+                                <i class="fas fa-users fa-3x text-info"></i>
+                            </div>
+                            <h5>Build Community</h5>
+                            <p class="text-muted">Connect with students, staff, and faculty across Africa University.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Popular Categories</h2>
+            <div class="row g-4" id="categories-container">
+                <!-- Categories will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Listings -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Recent Listings</h2>
+                <a href="browse.html" class="btn btn-link">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="row g-4" id="listings-container">
+                <!-- Listings will be loaded via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">How AUBazaar Works</h2>
+            <div class="row">
+                <div class="col-md-4 text-center mb-4">
+                    <div class="step-number">1</div>
+                    <h4>Sign Up</h4>
+                    <p>Register with your university email address for verification.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="step-number">2</div>
+                    <h4>Browse or List</h4>
+                    <p>Find what you need or post items you want to sell.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4">
+                    <div class="step-number">3</div>
+                    <h4>Connect & Transact</h4>
+                    <p>Message sellers, meet on campus, and complete your transaction safely.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="fas fa-university"></i> AUBazaar</h5>
+                    <p>Africa University's official online marketplace for secure and convenient exchange of goods and services.</p>
+                </div>
+                <div class="col-md-2">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-light">Home</a></li>
+                        <li><a href="browse.html" class="text-light">Browse</a></li>
+                        <li><a href="about.html" class="text-light">About</a></li>
+                        <li><a href="contact.html" class="text-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Policies</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="terms.html" class="text-light">Terms of Service</a></li>
+                        <li><a href="privacy.html" class="text-light">Privacy Policy</a></li>
+                        <li><a href="safety.html" class="text-light">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact</h5>
+                    <p><i class="fas fa-envelope"></i> support@aubazaar.africa.edu</p>
+                    <p><i class="fas fa-phone"></i> +263 123 456 789</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Africa University Campus</p>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>&copy; 2024 AUBazaar - Africa University. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+</html>
