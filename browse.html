@@ -28,7 +28,7 @@
             --au-gray: #6C757D;
             --au-dark: #212529;
         }
-        /* Navigation styles - keep your existing */
+        /* Navigation - copy from your existing */
         .navbar {
             background: var(--au-white) !important;
             padding: 1rem 0;
@@ -549,7 +549,7 @@
                 <div class="d-flex align-items-center gap-3">
                     <div class="search-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" placeholder="Search items..." id="globalSearch">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search items...">
                     </div>
                     <div class="d-flex gap-2">
                         <a href="login.html" class="btn-outline-custom">Login</a>
@@ -590,24 +590,24 @@
                         <div class="filter-section">
                             <h6>Categories</h6>
                             <div class="category-check">
-                                <input type="checkbox" id="cat1">
-                                <label for="cat1">Textbooks (156)</label>
+                                <input type="checkbox" id="cat1" value="Textbooks">
+                                <label for="cat1">Textbooks (<span id="count1">0</span>)</label>
                             </div>
                             <div class="category-check">
-                                <input type="checkbox" id="cat2">
-                                <label for="cat2">Electronics (89)</label>
+                                <input type="checkbox" id="cat2" value="Electronics">
+                                <label for="cat2">Electronics (<span id="count2">0</span>)</label>
                             </div>
                             <div class="category-check">
-                                <input type="checkbox" id="cat3">
-                                <label for="cat3">Furniture (45)</label>
+                                <input type="checkbox" id="cat3" value="Furniture">
+                                <label for="cat3">Furniture (<span id="count3">0</span>)</label>
                             </div>
                             <div class="category-check">
-                                <input type="checkbox" id="cat4">
-                                <label for="cat4">Clothing (67)</label>
+                                <input type="checkbox" id="cat4" value="Clothing">
+                                <label for="cat4">Clothing (<span id="count4">0</span>)</label>
                             </div>
                             <div class="category-check">
-                                <input type="checkbox" id="cat5">
-                                <label for="cat5">Dorm Essentials (123)</label>
+                                <input type="checkbox" id="cat5" value="Dorm Essentials">
+                                <label for="cat5">Dorm Essentials (<span id="count5">0</span>)</label>
                             </div>
                         </div>
 
@@ -628,7 +628,7 @@
                             <div id="conditionFilters">
                                 <span class="condition-badge-filter active" data-condition="all">All</span>
                                 <span class="condition-badge-filter" data-condition="new">New</span>
-                                <span class="condition-badge-filter" data-condition="like new">Like New</span>
+                                <span class="condition-badge-filter" data-condition="like-new">Like New</span>
                                 <span class="condition-badge-filter" data-condition="good">Good</span>
                                 <span class="condition-badge-filter" data-condition="fair">Fair</span>
                             </div>
@@ -639,10 +639,10 @@
                             <h6>Location</h6>
                             <select class="form-select" id="locationFilter">
                                 <option value="all">All Locations</option>
-                                <option value="library">Library</option>
-                                <option value="science">Science Building</option>
-                                <option value="halls">Residence Halls</option>
-                                <option value="student">Student Center</option>
+                                <option value="Library">Library</option>
+                                <option value="Science Building">Science Building</option>
+                                <option value="Residence Halls">Residence Halls</option>
+                                <option value="Student Center">Student Center</option>
                             </select>
                         </div>
 
@@ -654,35 +654,27 @@
                 <div class="col-lg-9">
                     <!-- Products Header -->
                     <div class="products-header">
-                        <span class="results-count" id="resultsCount">Showing 1-8 of 8 items</span>
+                        <span class="results-count" id="resultsCount">Loading items...</span>
                         <select class="sort-select" id="sortSelect">
                             <option value="newest">Newest First</option>
                             <option value="price-low">Price: Low to High</option>
                             <option value="price-high">Price: High to Low</option>
-                            <option value="popular">Most Popular</option>
                         </select>
                     </div>
 
                     <!-- Product Grid -->
                     <div class="row" id="productGrid">
                         <!-- Products will be loaded here -->
+                        <div class="col-12 text-center py-5">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Pagination -->
                     <nav>
-                        <ul class="pagination" id="pagination">
-                            <li class="page-item disabled" id="prevPage">
-                                <a class="page-link" href="#">Previous</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#" data-page="1">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" data-page="2">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#" data-page="3">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#" data-page="4">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#" data-page="5">5</a></li>
-                            <li class="page-item" id="nextPage">
-                                <a class="page-link" href="#">Next</a>
-                            </li>
-                        </ul>
+                        <ul class="pagination" id="pagination"></ul>
                     </nav>
                 </div>
             </div>
@@ -731,21 +723,12 @@
     
     <!-- Main JavaScript -->
     <script>
-        // Sample product data
-        const products = [
-            { id: 1, title: 'Calculus: Early Transcendentals', category: 'Textbooks', price: 25.99, location: 'Library', views: 42, condition: 'like new', image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500' },
-            { id: 2, title: 'MacBook Air 2020 - 256GB', category: 'Electronics', price: 699.99, location: 'CS Dept', views: 128, condition: 'good', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500' },
-            { id: 3, title: 'Mini Fridge - 3.2 cu. ft.', category: 'Dorm Essentials', price: 89.50, location: 'Hall A', views: 56, condition: 'good', image: 'https://images.unsplash.com/photo-1592489661722-8d3f8eeba40d?w=500' },
-            { id: 4, title: 'TI-84 Plus Graphing Calculator', category: 'Electronics', price: 45.00, location: 'Math Dept', views: 31, condition: 'like new', image: 'https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=500' },
-            { id: 5, title: 'LED Desk Lamp with USB', category: 'Furniture', price: 24.99, location: 'Hall B', views: 23, condition: 'new', image: 'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=500' },
-            { id: 6, title: 'North Face Backpack', category: 'Clothing', price: 35.00, location: 'Gym', views: 47, condition: 'good', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500' },
-            { id: 7, title: 'Dell XPS 13 Laptop', category: 'Electronics', price: 899.99, location: 'Library', views: 89, condition: 'like new', image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500' },
-            { id: 8, title: 'Mountain Bike', category: 'Sports', price: 120.00, location: 'Sports Complex', views: 34, condition: 'fair', image: 'https://images.unsplash.com/photo-1631545809320-84bdfdbac2b2?w=500' }
-        ];
-
+        // ========== LOAD PRODUCTS FROM LOCALSTORAGE ==========
+        let allProducts = [];
+        let filteredProducts = [];
         let currentPage = 1;
         const itemsPerPage = 6;
-        let filteredProducts = [...products];
+        
         let activeFilters = {
             categories: [],
             minPrice: 0,
@@ -755,13 +738,95 @@
             search: ''
         };
 
-        // ========== DISPLAY PRODUCTS ==========
+        // Load products when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            
+            // Add event listeners
+            document.getElementById('applyPriceBtn').addEventListener('click', applyPriceFilter);
+            document.getElementById('clearFilters').addEventListener('click', clearFilters);
+            document.getElementById('sortSelect').addEventListener('change', sortProducts);
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    activeFilters.search = this.value;
+                    currentPage = 1;
+                    displayProducts();
+                }
+            });
+            
+            // Category checkboxes
+            document.querySelectorAll('.category-check input').forEach(cb => {
+                cb.addEventListener('change', function() {
+                    if (this.checked) {
+                        activeFilters.categories.push(this.value);
+                    } else {
+                        activeFilters.categories = activeFilters.categories.filter(c => c !== this.value);
+                    }
+                    currentPage = 1;
+                    displayProducts();
+                });
+            });
+            
+            // Condition badges
+            document.querySelectorAll('.condition-badge-filter').forEach(badge => {
+                badge.addEventListener('click', function() {
+                    document.querySelectorAll('.condition-badge-filter').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    activeFilters.condition = this.dataset.condition;
+                    currentPage = 1;
+                    displayProducts();
+                });
+            });
+            
+            // Location filter
+            document.getElementById('locationFilter').addEventListener('change', function() {
+                activeFilters.location = this.value;
+                currentPage = 1;
+                displayProducts();
+            });
+        });
+
+        function loadProducts() {
+            // Get sample products
+            const sampleProducts = [
+                { id: 1, title: 'Calculus: Early Transcendentals', category: 'Textbooks', price: 25.99, location: 'Library', views: 42, condition: 'like-new', image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500', seller: 'john.doe', sellerName: 'John Doe', sellerRating: 4.5, date: '2024-02-20' },
+                { id: 2, title: 'MacBook Air 2020 - 256GB', category: 'Electronics', price: 699.99, location: 'Science Building', views: 128, condition: 'good', image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500', seller: 'jane.smith', sellerName: 'Jane Smith', sellerRating: 4.8, date: '2024-02-21' },
+                { id: 3, title: 'Mini Fridge - 3.2 cu. ft.', category: 'Dorm Essentials', price: 89.50, location: 'Residence Halls', views: 56, condition: 'good', image: 'https://images.unsplash.com/photo-1592489661722-8d3f8eeba40d?w=500', seller: 'mike.wilson', sellerName: 'Mike Wilson', sellerRating: 4.2, date: '2024-02-19' },
+                { id: 4, title: 'TI-84 Plus Graphing Calculator', category: 'Electronics', price: 45.00, location: 'Library', views: 31, condition: 'like-new', image: 'https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=500', seller: 'sarah.j', sellerName: 'Sarah Johnson', sellerRating: 4.9, date: '2024-02-22' },
+                { id: 5, title: 'LED Desk Lamp with USB', category: 'Furniture', price: 24.99, location: 'Residence Halls', views: 23, condition: 'new', image: 'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=500', seller: 'alex.b', sellerName: 'Alex Brown', sellerRating: 4.0, date: '2024-02-18' },
+                { id: 6, title: 'North Face Backpack', category: 'Clothing', price: 35.00, location: 'Student Center', views: 47, condition: 'good', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500', seller: 'emily.d', sellerName: 'Emily Davis', sellerRating: 4.7, date: '2024-02-23' }
+            ];
+            
+            // Get user listings from localStorage
+            const userListings = JSON.parse(localStorage.getItem('listings') || '[]');
+            
+            // Combine sample products with user listings
+            allProducts = [...sampleProducts, ...userListings];
+            
+            // Sort by date (newest first)
+            allProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Update category counts
+            updateCategoryCounts();
+            
+            // Display products
+            filteredProducts = [...allProducts];
+            displayProducts();
+        }
+
+        function updateCategoryCounts() {
+            const categories = ['Textbooks', 'Electronics', 'Furniture', 'Clothing', 'Dorm Essentials'];
+            categories.forEach((category, index) => {
+                const count = allProducts.filter(p => p.category === category).length;
+                document.getElementById(`count${index + 1}`).textContent = count;
+            });
+        }
+
         function displayProducts() {
             const grid = document.getElementById('productGrid');
-            if (!grid) return;
             
             // Apply filters
-            let displayProducts = products.filter(product => {
+            let displayProducts = allProducts.filter(product => {
                 // Category filter
                 if (activeFilters.categories.length > 0 && !activeFilters.categories.includes(product.category)) {
                     return false;
@@ -778,16 +843,8 @@
                 }
                 
                 // Location filter
-                if (activeFilters.location !== 'all') {
-                    const locationMap = {
-                        'library': 'Library',
-                        'science': 'Science Building',
-                        'halls': 'Residence Halls',
-                        'student': 'Student Center'
-                    };
-                    if (product.location !== locationMap[activeFilters.location]) {
-                        return false;
-                    }
+                if (activeFilters.location !== 'all' && product.location !== activeFilters.location) {
+                    return false;
                 }
                 
                 // Search filter
@@ -798,90 +855,131 @@
                 return true;
             });
             
-            // Sort products
-            const sortValue = document.getElementById('sortSelect')?.value || 'newest';
+            // Apply sorting
+            const sortValue = document.getElementById('sortSelect').value;
             if (sortValue === 'price-low') {
                 displayProducts.sort((a, b) => a.price - b.price);
             } else if (sortValue === 'price-high') {
                 displayProducts.sort((a, b) => b.price - a.price);
-            } else if (sortValue === 'popular') {
-                displayProducts.sort((a, b) => b.views - a.views);
+            } else {
+                displayProducts.sort((a, b) => new Date(b.date) - new Date(a.date));
             }
             
             filteredProducts = displayProducts;
             
-            // Pagination
-            const start = (currentPage - 1) * itemsPerPage;
-            const paginatedProducts = displayProducts.slice(start, start + itemsPerPage);
-            
             // Update results count
             document.getElementById('resultsCount').textContent = 
-                `Showing ${start + 1}-${Math.min(start + itemsPerPage, displayProducts.length)} of ${displayProducts.length} items`;
+                `Showing ${filteredProducts.length} items`;
+            
+            // Pagination
+            const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+            const start = (currentPage - 1) * itemsPerPage;
+            const paginatedProducts = filteredProducts.slice(start, start + itemsPerPage);
             
             // Generate HTML
-            let html = '';
-            paginatedProducts.forEach(product => {
-                html += `
-                    <div class="col-md-4 col-6">
-                        <div class="product-card">
-                            <div class="product-image-wrapper">
-                                <span class="product-badge">${product.condition.charAt(0).toUpperCase() + product.condition.slice(1)}</span>
-                                <div class="product-wishlist" onclick="toggleWishlist(this)">
-                                    <i class="far fa-heart"></i>
+            if (paginatedProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                        <h4>No items found</h4>
+                        <p class="text-muted">Try adjusting your filters or <a href="create-listing.html">list an item</a></p>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                paginatedProducts.forEach(product => {
+                    // Format condition for display
+                    const conditionDisplay = product.condition.split('-').map(word => 
+                        word.charAt(0).toUpperCase() + word.slice(1)
+                    ).join(' ');
+                    
+                    // Generate stars for rating
+                    let stars = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= Math.floor(product.sellerRating)) {
+                            stars += '<i class="fas fa-star text-warning"></i>';
+                        } else if (i - 0.5 <= product.sellerRating) {
+                            stars += '<i class="fas fa-star-half-alt text-warning"></i>';
+                        } else {
+                            stars += '<i class="far fa-star text-warning"></i>';
+                        }
+                    }
+                    
+                    html += `
+                        <div class="col-md-4 col-6">
+                            <div class="product-card">
+                                <div class="product-image-wrapper">
+                                    <span class="product-badge">${conditionDisplay}</span>
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                    <img src="${product.image || 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500'}" 
+                                         class="product-image" alt="${product.title}">
                                 </div>
-                                <img src="${product.image}" class="product-image" alt="${product.title}">
-                            </div>
-                            <div class="product-content">
-                                <div class="product-category">${product.category}</div>
-                                <h5 class="product-title">
-                                    <a href="product-detail.html?id=${product.id}">${product.title}</a>
-                                </h5>
-                                <div class="product-price">$${product.price.toFixed(2)}</div>
-                                <div class="product-meta">
-                                    <span><i class="fas fa-map-marker-alt"></i> ${product.location}</span>
-                                    <span><i class="fas fa-eye"></i> ${product.views} views</span>
-                                </div>
-                                <div class="product-actions">
-                                    <a href="product-detail.html?id=${product.id}" class="btn-view">View Details</a>
-                                    <a href="contact-seller.html?item=${product.id}" class="btn-cart" title="Contact Seller">
-                                        <i class="fas fa-envelope"></i>
-                                    </a>
+                                <div class="product-content">
+                                    <div class="product-category">${product.category}</div>
+                                    <h5 class="product-title">
+                                        <a href="product-detail.html?id=${product.id}">${product.title}</a>
+                                    </h5>
+                                    <div class="product-price">$${product.price.toFixed(2)}</div>
+                                    <div class="product-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> ${product.location}</span>
+                                        <span><i class="fas fa-eye"></i> ${product.views} views</span>
+                                    </div>
+                                    <div class="seller-info small text-muted mb-2">
+                                        <span class="rating">${stars}</span>
+                                        <span> by ${product.sellerName}</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="product-detail.html?id=${product.id}" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=${product.id}" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
-            });
-            
-            grid.innerHTML = html;
+                    `;
+                });
+                grid.innerHTML = html;
+            }
             
             // Update pagination
-            updatePagination(displayProducts.length);
+            updatePagination(totalPages);
         }
 
-        // ========== PAGINATION ==========
-        function updatePagination(totalItems) {
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
+        function updatePagination(totalPages) {
             const pagination = document.getElementById('pagination');
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
             
-            if (!pagination) return;
+            let html = '';
             
-            let html = `
-                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}" id="prevPage">
+            // Previous button
+            html += `
+                <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePage(${currentPage - 1}); return false;">Previous</a>
                 </li>
             `;
             
+            // Page numbers
             for (let i = 1; i <= totalPages; i++) {
-                html += `
-                    <li class="page-item ${currentPage === i ? 'active' : ''}">
-                        <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
-                    </li>
-                `;
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `
+                        <li class="page-item ${currentPage === i ? 'active' : ''}">
+                            <a class="page-link" href="#" onclick="changePage(${i}); return false;">${i}</a>
+                        </li>
+                    `;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+                }
             }
             
+            // Next button
             html += `
-                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}" id="nextPage">
+                <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
                     <a class="page-link" href="#" onclick="changePage(${currentPage + 1}); return false;">Next</a>
                 </li>
             `;
@@ -897,24 +995,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ========== FILTER FUNCTIONS ==========
-        
-        // Category filter
-        document.querySelectorAll('.category-check input').forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
-                const category = this.nextElementSibling.textContent.split(' ')[0];
-                if (this.checked) {
-                    activeFilters.categories.push(category);
-                } else {
-                    activeFilters.categories = activeFilters.categories.filter(c => c !== category);
-                }
-                currentPage = 1;
-                displayProducts();
-            });
-        });
-
-        // Price filter
-        document.getElementById('applyPriceBtn').addEventListener('click', function() {
+        function applyPriceFilter() {
             const min = parseFloat(document.getElementById('minPrice').value) || 0;
             const max = parseFloat(document.getElementById('maxPrice').value) || 1000;
             
@@ -924,33 +1005,11 @@
                 currentPage = 1;
                 displayProducts();
             } else {
-                alert('Please enter valid price range (min <= max)');
+                alert('Please enter a valid price range (min <= max)');
             }
-        });
+        }
 
-        // Condition filter
-        document.querySelectorAll('.condition-badge-filter').forEach(badge => {
-            badge.addEventListener('click', function() {
-                document.querySelectorAll('.condition-badge-filter').forEach(b => {
-                    b.classList.remove('active');
-                });
-                this.classList.add('active');
-                
-                activeFilters.condition = this.dataset.condition;
-                currentPage = 1;
-                displayProducts();
-            });
-        });
-
-        // Location filter
-        document.getElementById('locationFilter').addEventListener('change', function() {
-            activeFilters.location = this.value;
-            currentPage = 1;
-            displayProducts();
-        });
-
-        // Clear filters
-        document.getElementById('clearFilters').addEventListener('click', function() {
+        function clearFilters() {
             // Reset checkboxes
             document.querySelectorAll('.category-check input').forEach(cb => {
                 cb.checked = false;
@@ -970,7 +1029,7 @@
             document.getElementById('locationFilter').value = 'all';
             
             // Reset search
-            document.getElementById('globalSearch').value = '';
+            document.getElementById('searchInput').value = '';
             
             // Reset filters
             activeFilters = {
@@ -984,24 +1043,14 @@
             
             currentPage = 1;
             displayProducts();
-        });
+        }
 
-        // Sort
-        document.getElementById('sortSelect').addEventListener('change', function() {
+        function sortProducts() {
+            currentPage = 1;
             displayProducts();
-        });
+        }
 
-        // Search
-        document.getElementById('globalSearch').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                activeFilters.search = this.value;
-                currentPage = 1;
-                displayProducts();
-            }
-        });
-
-        // ========== WISHLIST ==========
-        window.toggleWishlist = function(element) {
+        function toggleWishlist(element) {
             const icon = element.querySelector('i');
             if (icon.classList.contains('far')) {
                 icon.classList.remove('far');
@@ -1012,11 +1061,9 @@
                 icon.classList.add('far');
                 showNotification('Removed from wishlist');
             }
-        };
+        }
 
-        // ========== NOTIFICATION ==========
         function showNotification(message) {
-            // Create notification element
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
@@ -1031,18 +1078,12 @@
                 animation: slideIn 0.3s ease;
             `;
             notification.textContent = message;
-            
             document.body.appendChild(notification);
             
             setTimeout(() => {
                 notification.remove();
             }, 2000);
         }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            displayProducts();
-        });
     </script>
 </body>
 </html>
