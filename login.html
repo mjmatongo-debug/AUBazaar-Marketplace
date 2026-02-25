@@ -399,127 +399,139 @@
     </div>
 
     <!-- Login JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('loginForm');
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
-            const submitBtn = document.getElementById('submitBtn');
-            const messageDiv = document.getElementById('loginMessage');
-            const googleBtn = document.getElementById('googleSignIn');
-            const forgotBtn = document.getElementById('forgotPassword');
-            const differentEmail = document.getElementById('differentEmail');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const submitBtn = document.getElementById('submitBtn');
+        const messageDiv = document.getElementById('loginMessage');
+        const googleBtn = document.getElementById('googleSignIn');
+        const forgotBtn = document.getElementById('forgotPassword');
+        const differentEmail = document.getElementById('differentEmail');
 
-            // Check for saved email
-            const savedEmail = localStorage.getItem('lastLoginEmail');
-            if (savedEmail) {
-                email.value = savedEmail;
+        // Check if user is ALREADY logged in - MODIFIED to prevent auto-redirect
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // Don't auto-redirect - let them choose to logout first
+        if (isLoggedIn) {
+            // Just show a message instead of redirecting
+            messageDiv.className = 'alert alert-info show';
+            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>You are already logged in. <a href="index.html" style="color: var(--au-red);">Go to Home</a> or <a href="#" onclick="logout()" style="color: var(--au-red);">Logout</a>';
+        }
+
+        // Check for saved email
+        const savedEmail = localStorage.getItem('lastLoginEmail');
+        if (savedEmail) {
+            email.value = savedEmail;
+        }
+
+        // Check if user was redirected from register
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'success') {
+            messageDiv.className = 'alert alert-success show';
+            messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Please sign in.';
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const emailVal = email.value.trim();
+            const pwd = password.value;
+            
+            // Validation
+            if (!emailVal || !pwd) {
+                messageDiv.className = 'alert alert-danger show';
+                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please enter both email and password';
+                return;
             }
-
-            // Check if user was redirected from register
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('registered') === 'success') {
+            
+            // Check if it's a university email
+            if (!emailVal.endsWith('@africa.edu') && !emailVal.endsWith('@students.africa.edu')) {
+                messageDiv.className = 'alert alert-danger show';
+                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email';
+                return;
+            }
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
+            
+            // Find user
+            const user = users.find(u => u.email === emailVal && u.password === pwd);
+            
+            if (user) {
+                // Success
                 messageDiv.className = 'alert alert-success show';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Please sign in.';
-            }
-
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Login successful! Redirecting...';
                 
-                const emailVal = email.value.trim();
-                const pwd = password.value;
+                // Save login state
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('lastLoginEmail', emailVal);
                 
-                // Validation
-                if (!emailVal || !pwd) {
-                    messageDiv.className = 'alert alert-danger show';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please enter both email and password';
-                    return;
-                }
+                submitBtn.disabled = true;
                 
-                // Check if it's a university email
-                if (!emailVal.endsWith('@africa.edu') && !emailVal.endsWith('@students.africa.edu')) {
-                    messageDiv.className = 'alert alert-danger show';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email';
-                    return;
-                }
-                
-                // Get users from localStorage
-                const users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
-                
-                // Find user
-                const user = users.find(u => u.email === emailVal && u.password === pwd);
-                
-                if (user) {
-                    // Success
-                    messageDiv.className = 'alert alert-success show';
-                    messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Login successful! Redirecting...';
-                    
-                    // Save login state
-                    localStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    localStorage.setItem('lastLoginEmail', emailVal);
-                    
-                    submitBtn.disabled = true;
-                    
-                    // Redirect to homepage
-                    setTimeout(() => {
-                        window.location.href = 'index.html';
-                    }, 1500);
-                } else {
-                    // Check if email exists but password wrong
-                    const emailExists = users.some(u => u.email === emailVal);
-                    
-                    if (emailExists) {
-                        messageDiv.className = 'alert alert-danger show';
-                        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Incorrect password. Please try again.';
-                    } else {
-                        messageDiv.className = 'alert alert-danger show';
-                        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>No account found with this email. <a href="register.html">Create one</a>';
-                    }
-                }
-            });
-
-            // Google Sign In (demo)
-            googleBtn.addEventListener('click', function() {
-                messageDiv.className = 'alert alert-info show';
-                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Google Sign In would work here with proper setup';
-                
-                // Demo: Auto-fill with Google email
+                // Redirect to homepage after 2 seconds
                 setTimeout(() => {
-                    email.value = 'student@gmail.com';
-                }, 1000);
-            });
-
-            // Forgot Password (demo)
-            forgotBtn.addEventListener('click', function(e) {
-                e.preventDefault();
+                    window.location.href = 'index.html';
+                }, 2000);
+            } else {
+                // Check if email exists but password wrong
+                const emailExists = users.some(u => u.email === emailVal);
                 
-                if (!email.value.trim()) {
-                    messageDiv.className = 'alert alert-warning show';
-                    messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Please enter your email first';
+                if (emailExists) {
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Incorrect password. Please try again.';
                 } else {
-                    messageDiv.className = 'alert alert-success show';
-                    messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Password reset link sent to ' + email.value;
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>No account found with this email. <a href="register.html">Create one</a>';
                 }
-            });
-
-            // Different email
-            differentEmail.addEventListener('click', function(e) {
-                e.preventDefault();
-                email.value = '';
-                password.value = '';
-                email.focus();
-                
-                messageDiv.className = 'alert alert-info show';
-                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Enter a different email address';
-            });
-
-            // Check if already logged in
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-                window.location.href = 'index.html';
             }
         });
-    </script>
+
+        // Google Sign In (demo)
+        googleBtn.addEventListener('click', function() {
+            messageDiv.className = 'alert alert-info show';
+            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Google Sign In would work here with proper setup';
+            
+            // Demo: Auto-fill with Google email
+            setTimeout(() => {
+                email.value = 'student@gmail.com';
+            }, 1000);
+        });
+
+        // Forgot Password (demo)
+        forgotBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (!email.value.trim()) {
+                messageDiv.className = 'alert alert-warning show';
+                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Please enter your email first';
+            } else {
+                messageDiv.className = 'alert alert-success show';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Password reset link sent to ' + email.value;
+            }
+        });
+
+        // Different email
+        differentEmail.addEventListener('click', function(e) {
+            e.preventDefault();
+            email.value = '';
+            password.value = '';
+            email.focus();
+            
+            messageDiv.className = 'alert alert-info show';
+            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Enter a different email address';
+        });
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('currentUser');
+        window.location.reload();
+    }
+</script>
 </body>
 </html>
