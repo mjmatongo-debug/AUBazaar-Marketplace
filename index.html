@@ -954,6 +954,129 @@
         }
         
         document.addEventListener('DOMContentLoaded', updateNavForLogin);
+        <!-- In your <head> add this style -->
+<style>
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        background: var(--au-red);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+</style>
+
+<!-- Navigation with dynamic menu -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <div class="logo">
+                <div class="logo-icon"><i class="fas fa-university"></i></div>
+                <div class="logo-text"><span>AU</span><span class="text-red">Bazaar</span></div>
+            </div>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="browse.html">Browse</a></li>
+                <li class="nav-item"><a class="nav-link" href="categories.html">Categories</a></li>
+            </ul>
+            
+            <div class="d-flex align-items-center gap-3" id="dynamicNav">
+                <!-- Content will be loaded by JavaScript -->
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Update navigation based on login status
+    function updateNavigation() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        const dynamicNav = document.getElementById('dynamicNav');
+        
+        if (isLoggedIn) {
+            // Get user initials for avatar
+            const userName = user.name || user.fullName || user.email || 'User';
+            const initials = userName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            
+            dynamicNav.innerHTML = `
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input" placeholder="Search items...">
+                </div>
+                
+                <a href="create-listing.html" class="btn-primary-custom">
+                    <i class="fas fa-plus-circle me-2"></i>Sell
+                </a>
+                
+                <div class="dropdown">
+                    <button class="btn btn-link text-dark text-decoration-none dropdown-toggle p-0" type="button" data-bs-toggle="dropdown">
+                        <div class="user-avatar">${initials}</div>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><h6 class="dropdown-header">${userName}</h6></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="seller-dashboard.html">
+                            <i class="fas fa-chart-line me-2 text-primary"></i>Seller Dashboard
+                        </a></li>
+                        <li><a class="dropdown-item" href="my-items.html">
+                            <i class="fas fa-box me-2 text-success"></i>My Items
+                        </a></li>
+                        <li><a class="dropdown-item" href="create-listing.html">
+                            <i class="fas fa-plus-circle me-2 text-warning"></i>Post New Item
+                        </a></li>
+                        <li><a class="dropdown-item" href="sales-stats.html">
+                            <i class="fas fa-dollar-sign me-2 text-info"></i>Earnings
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="#" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            `;
+        } else {
+            dynamicNav.innerHTML = `
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input" placeholder="Search items...">
+                </div>
+                
+                <div class="d-flex gap-2">
+                    <a href="login.html" class="btn-outline-custom">Login</a>
+                    <a href="register.html" class="btn-primary-custom">Register</a>
+                </div>
+                
+                <a href="create-listing.html" class="btn-primary-custom">
+                    <i class="fas fa-plus-circle me-2"></i>Sell
+                </a>
+            `;
+        }
+    }
+    
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
+    
+    // Run when page loads
+    document.addEventListener('DOMContentLoaded', updateNavigation);
+</script>
     </script>
 </body>
 </html>
