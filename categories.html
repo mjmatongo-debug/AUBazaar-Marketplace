@@ -4,48 +4,673 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories - AUBazaar</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding-top: 80px;
+        }
+
+        :root {
+            --au-red: #C41E3A;
+            --au-red-dark: #9B152C;
+            --au-red-light: #FF4D6D;
+            --au-white: #FFFFFF;
+            --au-offwhite: #F8F9FA;
+            --au-gray: #6C757D;
+            --au-dark: #212529;
+        }
+
+        /* Navigation (same as other pages) */
+        .navbar {
+            background: var(--au-white) !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: var(--au-red);
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transform: rotate(-5deg);
+            transition: transform 0.3s;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(0deg);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span:first-child {
+            color: var(--au-dark);
+        }
+
+        .text-red {
+            color: var(--au-red);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--au-dark) !important;
+            margin: 0 0.5rem;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--au-red);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--au-red) !important;
+        }
+
+        .btn-primary-custom {
+            background: var(--au-red);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--au-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--au-offwhite) 0%, white 100%);
+            padding: 60px 0 40px;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--au-dark);
+        }
+
+        .page-title span {
+            color: var(--au-red);
+            position: relative;
+        }
+
+        .page-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(196, 30, 58, 0.2);
+            z-index: -1;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: var(--au-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Category Grid */
+        .categories-section {
+            padding: 20px 0 60px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+            height: 100%;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--au-red);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(196, 30, 58, 0.1);
+            border-color: var(--au-red-light);
+        }
+
+        .category-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(196, 30, 58, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: var(--au-red);
+            transition: all 0.3s;
+        }
+
+        .category-card:hover .category-icon {
+            background: var(--au-red);
+            color: white;
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .category-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--au-dark);
+        }
+
+        .category-count {
+            color: var(--au-gray);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-features {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 0;
+            font-size: 0.9rem;
+            color: var(--au-gray);
+        }
+
+        .category-features li {
+            margin-bottom: 0.3rem;
+        }
+
+        .category-features i {
+            color: var(--au-red);
+            margin-right: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        /* Featured Categories */
+        .featured-section {
+            background: white;
+            padding: 60px 0;
+            margin-top: 40px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .section-title span {
+            color: var(--au-red);
+        }
+
+        .popular-tag {
+            display: inline-block;
+            background: var(--au-red);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--au-dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--au-red);
+        }
+
+        .footer-text {
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--au-red);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--au-red);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            color: #999;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info i {
+            color: var(--au-red);
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <i class="fas fa-university text-primary"></i>
-                <span class="fw-bold text-primary">AUBazaar</span>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span>AU</span><span class="text-red">Bazaar</span>
+                    </div>
+                </div>
             </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse.html">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="categories.html">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" placeholder="Search categories...">
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="login.html" class="btn-outline-custom">Login</a>
+                        <a href="register.html" class="btn-primary-custom">Register</a>
+                    </div>
+                    <a href="seller-dashboard.html" class="btn-primary-custom">
+                        <i class="fas fa-store me-2"></i>Dashboard
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5 pt-5">
-        <h1 class="mb-4">Categories</h1>
-        <div class="row">
-            <div class="col-md-3 mb-3">
-                <div class="card text-center p-4">
-                    <i class="fas fa-book fa-3x text-primary mb-3"></i>
-                    <h5>Textbooks</h5>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Browse by <span>Category</span></h1>
+            <p class="page-subtitle">Find exactly what you need from Africa University students and staff</p>
+        </div>
+    </section>
+
+    <!-- Main Categories Grid -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Textbooks -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=textbooks" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="category-name">Textbooks</h3>
+                        <div class="category-count">156 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Engineering</li>
+                            <li><i class="fas fa-check"></i> Medicine</li>
+                            <li><i class="fas fa-check"></i> Business</li>
+                        </ul>
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card text-center p-4">
-                    <i class="fas fa-laptop fa-3x text-primary mb-3"></i>
-                    <h5>Electronics</h5>
+
+                <!-- Electronics -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=electronics" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="category-name">Electronics</h3>
+                        <div class="category-count">89 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Laptops</li>
+                            <li><i class="fas fa-check"></i> Phones</li>
+                            <li><i class="fas fa-check"></i> Accessories</li>
+                        </ul>
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card text-center p-4">
-                    <i class="fas fa-couch fa-3x text-primary mb-3"></i>
-                    <h5>Furniture</h5>
+
+                <!-- Furniture -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=furniture" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-couch"></i>
+                        </div>
+                        <h3 class="category-name">Furniture</h3>
+                        <div class="category-count">45 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Desks</li>
+                            <li><i class="fas fa-check"></i> Chairs</li>
+                            <li><i class="fas fa-check"></i> Beds</li>
+                        </ul>
+                    </a>
                 </div>
-            </div>
-            <div class="col-md-3 mb-3">
-                <div class="card text-center p-4">
-                    <i class="fas fa-tshirt fa-3x text-primary mb-3"></i>
-                    <h5>Clothing</h5>
+
+                <!-- Clothing -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=clothing" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-tshirt"></i>
+                        </div>
+                        <h3 class="category-name">Clothing</h3>
+                        <div class="category-count">67 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Men</li>
+                            <li><i class="fas fa-check"></i> Women</li>
+                            <li><i class="fas fa-check"></i> Shoes</li>
+                        </ul>
+                    </a>
+                </div>
+
+                <!-- Dorm Essentials -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=dorm" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <h3 class="category-name">Dorm Essentials</h3>
+                        <div class="category-count">123 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Bedding</li>
+                            <li><i class="fas fa-check"></i> Storage</li>
+                            <li><i class="fas fa-check"></i> Kitchen</li>
+                        </ul>
+                    </a>
+                </div>
+
+                <!-- Sports Equipment -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=sports" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h3 class="category-name">Sports</h3>
+                        <div class="category-count">34 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Gym</li>
+                            <li><i class="fas fa-check"></i> Outdoor</li>
+                            <li><i class="fas fa-check"></i> Team Sports</li>
+                        </ul>
+                    </a>
+                </div>
+
+                <!-- Study Materials -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=study" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <h3 class="category-name">Study Materials</h3>
+                        <div class="category-count">78 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Notes</li>
+                            <li><i class="fas fa-check"></i> Stationery</li>
+                            <li><i class="fas fa-check"></i> Lab coats</li>
+                        </ul>
+                    </a>
+                </div>
+
+                <!-- Services -->
+                <div class="col-lg-3 col-md-4 col-6">
+                    <a href="browse.html?category=services" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="category-name">Services</h3>
+                        <div class="category-count">23 items</div>
+                        <ul class="category-features">
+                            <li><i class="fas fa-check"></i> Tutoring</li>
+                            <li><i class="fas fa-check"></i> Repairs</li>
+                            <li><i class="fas fa-check"></i> Photography</li>
+                        </ul>
+                    </a>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Popular Categories Section -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 class="section-title">Most <span>Popular</span> Right Now</h2>
+            <div class="row g-3">
+                <div class="col-md-3 col-6">
+                    <a href="browse.html?category=textbooks&subject=engineering" class="category-card" style="padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📚</div>
+                        <h4 style="font-size: 1rem;">Engineering Books</h4>
+                        <small class="text-muted">32 items</small>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="browse.html?category=electronics&type=laptops" class="category-card" style="padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">💻</div>
+                        <h4 style="font-size: 1rem;">Laptops</h4>
+                        <small class="text-muted">28 items</small>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="browse.html?category=furniture&type=desks" class="category-card" style="padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🪑</div>
+                        <h4 style="font-size: 1rem;">Study Desks</h4>
+                        <small class="text-muted">15 items</small>
+                    </a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="browse.html?category=clothing&type=labcoats" class="category-card" style="padding: 1rem;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🥼</div>
+                        <h4 style="font-size: 1rem;">Lab Coats</h4>
+                        <small class="text-muted">12 items</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-5">
+        <div class="container text-center">
+            <h3 class="mb-3">Don't see your category?</h3>
+            <p class="text-muted mb-4">You can list items in any category when you sell</p>
+            <a href="create-listing.html" class="btn-primary-custom btn-lg">
+                <i class="fas fa-plus-circle me-2"></i>Start Selling
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer (use your existing footer with seller dashboard link) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">AU<span>Bazaar</span></div>
+                    <p class="footer-text">Africa University's official online marketplace.</p>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="browse.html">Browse</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">For Sellers</h5>
+                    <ul class="footer-links">
+                        <li><a href="seller-dashboard.html">📊 Dashboard</a></li>
+                        <li><a href="create-listing.html">➕ Sell an Item</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <h5 class="footer-title">Account</h5>
+                    <ul class="footer-links">
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="register.html">Register</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AUBazaar - Africa University</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search functionality
+        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = this.value;
+                if (searchTerm.trim()) {
+                    window.location.href = `browse.html?search=${encodeURIComponent(searchTerm)}`;
+                }
+            }
+        });
+    </script>
 </body>
 </html>
