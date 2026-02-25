@@ -4,63 +4,233 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - AUBazaar</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .register-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .register-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .register-body {
+            padding: 30px;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-register {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn-register:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        .alert {
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <!-- Simple Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
         <div class="container">
             <a class="navbar-brand" href="index.html">
                 <i class="fas fa-university text-primary"></i>
                 <span class="fw-bold text-primary">AUBazaar</span>
             </a>
+            <div>
+                <a href="login.html" class="btn btn-outline-primary me-2">Login</a>
+                <a href="register.html" class="btn btn-primary">Register</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Register Form -->
-    <div class="container mt-5 pt-5">
+    <!-- Main Register Form -->
+    <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-body p-5">
-                        <h2 class="text-center mb-4">Join AUBazaar</h2>
-                        
-                        <form>
+                <div class="card register-card">
+                    <div class="register-header">
+                        <i class="fas fa-user-plus fa-3x mb-3"></i>
+                        <h3>Join AUBazaar Today!</h3>
+                        <p class="mb-0">Africa University's trusted marketplace</p>
+                    </div>
+                    
+                    <div class="register-body">
+                        <!-- IMPORTANT: This form has an ID so JavaScript can find it -->
+                        <form id="registerForm">
                             <div class="mb-3">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" class="form-control" placeholder="John Doe">
+                                <label class="form-label fw-bold">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" 
+                                       placeholder="Enter your full name" required>
                             </div>
+                            
                             <div class="mb-3">
-                                <label class="form-label">University Email</label>
-                                <input type="email" class="form-control" placeholder="name@africa.edu">
+                                <label class="form-label fw-bold">University Email</label>
+                                <input type="email" class="form-control" id="email" 
+                                       placeholder="your.name@students.africa.edu" required>
+                                <small class="text-muted">Use your @africa.edu or @students.africa.edu email</small>
                             </div>
+                            
                             <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-control" placeholder="Create password">
+                                <label class="form-label fw-bold">Password</label>
+                                <input type="password" class="form-control" id="password" 
+                                       placeholder="Create a password" required>
                             </div>
+                            
                             <div class="mb-3">
-                                <label class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" placeholder="Confirm password">
+                                <label class="form-label fw-bold">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirmPassword" 
+                                       placeholder="Confirm your password" required>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">I am a:</label>
-                                <select class="form-select">
-                                    <option>Student</option>
-                                    <option>Staff</option>
-                                    <option>Faculty</option>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">I am a:</label>
+                                <select class="form-control" id="userType">
+                                    <option value="student">Student</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="faculty">Faculty</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Register</button>
-                            <p class="text-center mt-3">
-                                Already have an account? <a href="login.html">Login</a>
-                            </p>
+                            
+                            <!-- This is where messages will appear -->
+                            <div id="registerMessage" class="alert" style="display: none;"></div>
+                            
+                            <button type="submit" class="btn-register">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </button>
                         </form>
+                        
+                        <div class="text-center mt-4">
+                            <p>Already have an account? <a href="login.html" class="text-primary">Login here</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- JavaScript that makes registration work -->
+    <script>
+        // Wait for the page to load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the form element
+            const form = document.getElementById('registerForm');
+            
+            // Add submit event listener
+            form.addEventListener('submit', function(e) {
+                // Stop the form from actually submitting (refreshing page)
+                e.preventDefault();
+                
+                // Get all the values from the form
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const userType = document.getElementById('userType').value;
+                const messageDiv = document.getElementById('registerMessage');
+                
+                // ========== VALIDATION CHECKS ==========
+                
+                // Check if any field is empty
+                if (!fullName || !email || !password || !confirmPassword) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please fill in all fields';
+                    return;
+                }
+                
+                // Check if email ends with @africa.edu or @students.africa.edu
+                if (!email.endsWith('@africa.edu') && !email.endsWith('@students.africa.edu')) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email (@africa.edu or @students.africa.edu)';
+                    return;
+                }
+                
+                // Check if passwords match
+                if (password !== confirmPassword) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Passwords do not match';
+                    return;
+                }
+                
+                // Check password length (minimum 6 characters)
+                if (password.length < 6) {
+                    messageDiv.style.display = 'block';
+                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Password must be at least 6 characters';
+                    return;
+                }
+                
+                // ========== IF ALL CHECKS PASS ==========
+                
+                // Show success message
+                messageDiv.style.display = 'block';
+                messageDiv.className = 'alert alert-success';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Redirecting to login...';
+                
+                // SAVE USER DATA (this is like a fake database using browser storage)
+                // In a real app, this would go to a server
+                const userData = {
+                    name: fullName,
+                    email: email,
+                    type: userType,
+                    registered: new Date().toLocaleString()
+                };
+                
+                // Save to browser's localStorage
+                localStorage.setItem('registeredUser', JSON.stringify(userData));
+                
+                // Also save that this user is now "registered" so login page can check
+                let users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
+                users.push({
+                    email: email,
+                    password: password, // In real app, NEVER store plain passwords!
+                    name: fullName,
+                    type: userType
+                });
+                localStorage.setItem('aubazaarUsers', JSON.stringify(users));
+                
+                // Disable the submit button to prevent double submission
+                document.querySelector('.btn-register').disabled = true;
+                
+                // Redirect to login page after 2 seconds
+                setTimeout(function() {
+                    window.location.href = 'login.html';
+                }, 2000);
+            });
+        });
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
