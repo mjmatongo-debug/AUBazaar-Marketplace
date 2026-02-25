@@ -8,145 +8,513 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-        }
-        .login-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        .login-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
-            text-align: center;
         }
-        .login-body {
-            padding: 30px;
+
+        :root {
+            --au-red: #C41E3A;
+            --au-red-dark: #9B152C;
         }
-        .form-control {
-            border-radius: 10px;
-            padding: 12px;
-            border: 1px solid #e0e0e0;
+
+        /* Simple Logo Only */
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 20px;
         }
-        .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: var(--au-red);
             color: white;
-            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .logo-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo-text span {
+            color: var(--au-red);
+        }
+
+        /* Login Card */
+        .login-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            max-width: 450px;
             width: 100%;
-            transition: transform 0.2s;
+            margin: 0 auto;
         }
-        .btn-login:hover {
-            transform: translateY(-2px);
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .welcome-back {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .welcome-back .email {
+            font-weight: 600;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .welcome-back .account-type {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--au-red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        .btn-primary-custom {
+            width: 100%;
+            background: var(--au-red);
             color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--au-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+        }
+
+        .btn-google {
+            width: 100%;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin: 10px 0;
+        }
+
+        .forgot-password a {
+            color: var(--au-red);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: var(--au-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .different-account {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .different-account a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .different-account a:hover {
+            color: var(--au-red);
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 12px;
+            padding: 12px;
+            margin: 15px 0;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Simple Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-university text-primary"></i>
-                <span class="fw-bold text-primary">AUBazaar</span>
-            </a>
-            <div>
-                <a href="login.html" class="btn btn-primary me-2">Login</a>
-                <a href="register.html" class="btn btn-outline-primary">Register</a>
+    <!-- Simple Logo Only -->
+    <div class="logo-container">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-university"></i>
             </div>
-        </div>
-    </nav>
-
-    <!-- Main Login Form -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card login-card">
-                    <div class="login-header">
-                        <i class="fas fa-user-circle fa-3x mb-3"></i>
-                        <h3>Welcome Back!</h3>
-                        <p class="mb-0">Login to continue to AUBazaar</p>
-                    </div>
-                    
-                    <div class="login-body">
-                        <form id="loginForm">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">University Email</label>
-                                <input type="email" class="form-control" id="email" 
-                                       placeholder="your.name@africa.edu" required>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Password</label>
-                                <input type="password" class="form-control" id="password" 
-                                       placeholder="Enter your password" required>
-                            </div>
-                            
-                            <div id="loginMessage" class="alert" style="display: none;"></div>
-                            
-                            <button type="submit" class="btn-login">
-                                <i class="fas fa-sign-in-alt me-2"></i>Login
-                            </button>
-                        </form>
-                        
-                        <div class="text-center mt-4">
-                            <p>Don't have an account? <a href="register.html" class="text-primary">Register here</a></p>
-                        </div>
-                    </div>
-                </div>
+            <div class="logo-text">
+                <span>AU</span>Bazaar
             </div>
-        </div>
+        </a>
     </div>
 
+    <!-- Clean Login Card -->
+    <div class="login-card">
+        <div class="login-header">
+            <h2>Welcome back</h2>
+            <p>Sign in to continue to AUBazaar</p>
+        </div>
+
+        <!-- Google Sign In -->
+        <button class="btn-google" id="googleSignIn">
+            <img src="https://www.google.com/favicon.ico" alt="Google">
+            Continue with Google
+        </button>
+
+        <div class="divider">
+            <span>or sign in with email</span>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <!-- Email -->
+            <div class="form-group">
+                <label class="form-label">University Email</label>
+                <input type="email" class="form-control" id="email" 
+                       placeholder="your.name@africa.edu" required>
+            </div>
+            
+            <!-- Password -->
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" 
+                       placeholder="Enter your password" required>
+            </div>
+            
+            <!-- Forgot Password -->
+            <div class="forgot-password">
+                <a href="#" id="forgotPassword">Reset your password</a>
+            </div>
+            
+            <!-- Message Area -->
+            <div id="loginMessage" class="alert"></div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary-custom" id="submitBtn">
+                Sign in
+            </button>
+            
+            <!-- Sign Up Link -->
+            <div class="signup-link">
+                Don't have an account? <a href="register.html">Create account</a>
+            </div>
+            
+            <!-- Different Account -->
+            <div class="different-account">
+                <a href="#" id="differentEmail">Sign in with a different email address</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Links (like Adobe) -->
+    <div class="footer-links">
+        <a href="#">Terms of Use</a> | 
+        <a href="#">Cookie preferences</a> | 
+        <a href="#">Privacy</a> | 
+        <a href="#">Do not sell my information</a>
+        <div style="margin-top: 10px;">Copyright © 2024 AUBazaar. All rights reserved.</div>
+    </div>
+
+    <!-- Login JavaScript -->
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
             const messageDiv = document.getElementById('loginMessage');
-            
-            // Get registered users from localStorage
-            const users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
-            
-            // Find user with matching email and password
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (user) {
-                // Login successful
-                messageDiv.style.display = 'block';
-                messageDiv.className = 'alert alert-success';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Login successful! Redirecting...';
+            const googleBtn = document.getElementById('googleSignIn');
+            const forgotBtn = document.getElementById('forgotPassword');
+            const differentEmail = document.getElementById('differentEmail');
+
+            // Check for saved email
+            const savedEmail = localStorage.getItem('lastLoginEmail');
+            if (savedEmail) {
+                email.value = savedEmail;
+            }
+
+            // Check if user was redirected from register
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('registered') === 'success') {
+                messageDiv.className = 'alert alert-success show';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Please sign in.';
+            }
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
                 
-                // Save login state
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                const emailVal = email.value.trim();
+                const pwd = password.value;
                 
-                // Redirect to homepage
+                // Validation
+                if (!emailVal || !pwd) {
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please enter both email and password';
+                    return;
+                }
+                
+                // Check if it's a university email
+                if (!emailVal.endsWith('@africa.edu') && !emailVal.endsWith('@students.africa.edu')) {
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email';
+                    return;
+                }
+                
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
+                
+                // Find user
+                const user = users.find(u => u.email === emailVal && u.password === pwd);
+                
+                if (user) {
+                    // Success
+                    messageDiv.className = 'alert alert-success show';
+                    messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Login successful! Redirecting...';
+                    
+                    // Save login state
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('lastLoginEmail', emailVal);
+                    
+                    submitBtn.disabled = true;
+                    
+                    // Redirect to homepage
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    // Check if email exists but password wrong
+                    const emailExists = users.some(u => u.email === emailVal);
+                    
+                    if (emailExists) {
+                        messageDiv.className = 'alert alert-danger show';
+                        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Incorrect password. Please try again.';
+                    } else {
+                        messageDiv.className = 'alert alert-danger show';
+                        messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>No account found with this email. <a href="register.html">Create one</a>';
+                    }
+                }
+            });
+
+            // Google Sign In (demo)
+            googleBtn.addEventListener('click', function() {
+                messageDiv.className = 'alert alert-info show';
+                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Google Sign In would work here with proper setup';
+                
+                // Demo: Auto-fill with Google email
                 setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            } else {
-                // Login failed
-                messageDiv.style.display = 'block';
-                messageDiv.className = 'alert alert-danger';
-                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Invalid email or password';
+                    email.value = 'student@gmail.com';
+                }, 1000);
+            });
+
+            // Forgot Password (demo)
+            forgotBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (!email.value.trim()) {
+                    messageDiv.className = 'alert alert-warning show';
+                    messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Please enter your email first';
+                } else {
+                    messageDiv.className = 'alert alert-success show';
+                    messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Password reset link sent to ' + email.value;
+                }
+            });
+
+            // Different email
+            differentEmail.addEventListener('click', function(e) {
+                e.preventDefault();
+                email.value = '';
+                password.value = '';
+                email.focus();
+                
+                messageDiv.className = 'alert alert-info show';
+                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Enter a different email address';
+            });
+
+            // Check if already logged in
+            if (localStorage.getItem('isLoggedIn') === 'true') {
+                window.location.href = 'index.html';
             }
         });
-        
-        // Check if user is already logged in
-        if (localStorage.getItem('isLoggedIn') === 'true') {
-            window.location.href = 'index.html';
-        }
     </script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
