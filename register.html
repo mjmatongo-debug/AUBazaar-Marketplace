@@ -9,7 +9,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -19,204 +19,99 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
         :root {
             --au-red: #C41E3A;
             --au-red-dark: #9B152C;
-            --au-red-light: #FF4D6D;
-            --au-white: #FFFFFF;
-            --au-offwhite: #F8F9FA;
-            --au-gray: #6C757D;
-            --au-dark: #212529;
         }
 
-        /* Navigation */
-        .navbar {
-            background: var(--au-white) !important;
-            padding: 1rem 0;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        /* Simple Logo Only - No Navigation */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .logo-icon {
             font-size: 2rem;
             background: var(--au-red);
             color: white;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 12px;
-            transform: rotate(-5deg);
-            transition: transform 0.3s;
-        }
-
-        .logo-icon:hover {
-            transform: rotate(0deg);
         }
 
         .logo-text {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
         }
 
-        .logo-text span:first-child {
-            color: var(--au-dark);
-        }
-
-        .text-red {
+        .logo-text span {
             color: var(--au-red);
         }
 
-        .nav-link {
-            font-weight: 500;
-            color: var(--au-dark) !important;
-            margin: 0 0.5rem;
-            position: relative;
-            padding: 0.5rem 1rem !important;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--au-red);
-            transition: width 0.3s;
-        }
-
-        .nav-link:hover::after {
-            width: 70%;
-        }
-
-        .nav-link.active {
-            color: var(--au-red) !important;
-        }
-
-        .btn-primary-custom {
-            background: var(--au-red);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .btn-primary-custom:hover {
-            background: var(--au-red-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
-            color: white;
-        }
-
-        .btn-outline-custom {
-            background: transparent;
-            color: var(--au-red);
-            border: 2px solid var(--au-red);
-            padding: 0.6rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-outline-custom:hover {
-            background: var(--au-red);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        /* Register Container */
-        .register-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 100px 0 60px;
-        }
-
+        /* Register Card - Clean like Adobe */
         .register-card {
             background: white;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-            overflow: hidden;
-            max-width: 500px;
-            width: 90%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            max-width: 450px;
+            width: 100%;
             margin: 0 auto;
         }
 
         .register-header {
-            background: linear-gradient(135deg, var(--au-red) 0%, var(--au-red-dark) 100%);
-            color: white;
-            padding: 2rem;
             text-align: center;
-        }
-
-        .register-header i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            background: rgba(255,255,255,0.2);
-            width: 80px;
-            height: 80px;
-            line-height: 80px;
-            border-radius: 50%;
-            display: inline-block;
+            margin-bottom: 30px;
         }
 
         .register-header h2 {
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
         }
 
         .register-header p {
-            opacity: 0.9;
-            margin: 0;
+            color: #666;
             font-size: 0.95rem;
         }
 
-        .register-body {
-            padding: 2rem;
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
         }
 
         .form-label {
             font-weight: 500;
-            color: var(--au-dark);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-label i {
-            color: var(--au-red);
-            width: 20px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
         }
 
         .form-control {
-            border: 1px solid #e0e0e0;
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
             border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 0.5rem;
+            font-size: 1rem;
             transition: all 0.3s;
         }
 
@@ -227,50 +122,150 @@
         }
 
         .form-text {
-            color: var(--au-gray);
+            color: #666;
             font-size: 0.85rem;
-            margin-bottom: 1rem;
+            margin-top: 5px;
         }
 
-        .form-select {
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            margin-bottom: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-select:focus {
-            outline: none;
-            border-color: var(--au-red);
-        }
-
+        /* Password Requirements */
         .password-requirements {
             background: #f8f9fa;
             border-radius: 12px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-size: 0.85rem;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9rem;
         }
 
         .requirement {
-            color: var(--au-gray);
-            margin-bottom: 0.3rem;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .requirement i {
+            width: 20px;
+            margin-right: 8px;
         }
 
         .requirement.valid {
             color: #28a745;
         }
 
-        .requirement i {
-            margin-right: 0.5rem;
-            width: 16px;
+        .btn-primary-custom {
+            width: 100%;
+            background: var(--au-red);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--au-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+        }
+
+        .btn-google {
+            width: 100%;
+            background: white;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-google:hover {
+            background: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        .btn-google img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider::before {
+            left: 0;
+        }
+
+        .divider::after {
+            right: 0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: var(--au-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         .alert {
             border-radius: 12px;
-            padding: 1rem;
-            margin: 1rem 0;
+            padding: 12px;
+            margin: 15px 0;
             display: none;
         }
 
@@ -290,322 +285,132 @@
             border: 1px solid #f5c6cb;
         }
 
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .login-link a {
-            color: var(--au-red);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--au-dark);
-            color: white;
-            padding: 60px 0 30px;
-            margin-top: auto;
-        }
-
-        .footer-logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-
-        .footer-logo span {
-            color: var(--au-red);
-        }
-
-        .footer-text {
-            color: #999;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .footer-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.5rem;
-        }
-
-        .footer-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--au-red);
-        }
-
-        .footer-links {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: #999;
-            text-decoration: none;
-            transition: color 0.3s, padding-left 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--au-red);
-            padding-left: 5px;
-        }
-
-        .contact-info {
-            color: #999;
-            margin-bottom: 0.8rem;
-        }
-
-        .contact-info i {
-            color: var(--au-red);
-            width: 25px;
-            margin-right: 10px;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            margin-top: 30px;
-            border-top: 1px solid #333;
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .register-wrapper {
-                padding: 80px 0 40px;
-            }
-            .register-body {
-                padding: 1.5rem;
+        @media (max-width: 480px) {
+            .register-card {
+                padding: 30px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation - SIMPLIFIED for non-logged in users -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-university"></i>
-                    </div>
-                    <div class="logo-text">
-                        <span>AU</span><span class="text-red">Bazaar</span>
-                    </div>
-                </div>
-            </a>
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="browse.html">Browse</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categories.html">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                
-                <div class="d-flex align-items-center gap-3">
-                    <!-- Only Login button - no Dashboard until registered -->
-                    <a href="login.html" class="btn-outline-custom">Login</a>
-                    <a href="register.html" class="btn-primary-custom">Register</a>
-                </div>
+    <!-- Simple Logo Only - NO NAVIGATION MENU -->
+    <div style="position: absolute; top: 20px; left: 20px;">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-university"></i>
             </div>
-        </div>
-    </nav>
-
-    <!-- Register Form -->
-    <div class="register-wrapper">
-        <div class="register-card">
-            <div class="register-header">
-                <i class="fas fa-user-plus"></i>
-                <h2>Join AUBazaar Today!</h2>
-                <p>Africa University's trusted marketplace</p>
+            <div class="logo-text">
+                <span>AU</span>Bazaar
             </div>
-            
-            <div class="register-body">
-                <form id="registerForm">
-                    <!-- Full Name -->
-                    <label class="form-label">
-                        <i class="fas fa-user"></i>
-                        Full Name
-                    </label>
-                    <input type="text" class="form-control" id="fullName" 
-                           placeholder="Enter your full name" required>
-                    
-                    <!-- University Email -->
-                    <label class="form-label">
-                        <i class="fas fa-envelope"></i>
-                        University Email
-                    </label>
-                    <input type="email" class="form-control" id="email" 
-                           placeholder="your.name@students.africa.edu" required>
-                    <div class="form-text">
-                        <i class="fas fa-info-circle"></i>
-                        Use your @africa.edu or @students.africa.edu email
-                    </div>
-                    
-                    <!-- Password -->
-                    <label class="form-label">
-                        <i class="fas fa-lock"></i>
-                        Password
-                    </label>
-                    <input type="password" class="form-control" id="password" 
-                           placeholder="Create a password" required>
-                    
-                    <!-- Password Requirements -->
-                    <div class="password-requirements" id="passwordRequirements">
-                        <div class="requirement" id="lengthReq">
-                            <i class="far fa-circle"></i> At least 6 characters
-                        </div>
-                        <div class="requirement" id="numberReq">
-                            <i class="far fa-circle"></i> Contains at least one number
-                        </div>
-                        <div class="requirement" id="letterReq">
-                            <i class="far fa-circle"></i> Contains at least one letter
-                        </div>
-                    </div>
-                    
-                    <!-- Confirm Password -->
-                    <label class="form-label">
-                        <i class="fas fa-lock"></i>
-                        Confirm Password
-                    </label>
-                    <input type="password" class="form-control" id="confirmPassword" 
-                           placeholder="Confirm your password" required>
-                    <div class="form-text" id="matchMessage"></div>
-                    
-                    <!-- User Type -->
-                    <label class="form-label">
-                        <i class="fas fa-tag"></i>
-                        I am a:
-                    </label>
-                    <select class="form-select" id="userType">
-                        <option value="student">Student</option>
-                        <option value="staff">Staff</option>
-                        <option value="faculty">Faculty</option>
-                    </select>
-                    
-                    <!-- Terms Agreement -->
-                    <div class="form-check mb-3">
-                        <input type="checkbox" class="form-check-input" id="terms" required>
-                        <label class="form-check-label" for="terms">
-                            I agree to the <a href="#">Terms of Service</a> and 
-                            <a href="#">Privacy Policy</a>
-                        </label>
-                    </div>
-                    
-                    <!-- Message Area -->
-                    <div id="registerMessage" class="alert"></div>
-                    
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn-primary-custom w-100" id="submitBtn">
-                        <i class="fas fa-user-plus me-2"></i>Create Account
-                    </button>
-                    
-                    <!-- Login Link -->
-                    <div class="login-link">
-                        Already have an account? <a href="login.html">Login here</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </a>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="footer-logo">
-                        AU<span>Bazaar</span>
-                    </div>
-                    <p class="footer-text">
-                        Africa University's official online marketplace for secure and convenient exchange of goods and services.
-                    </p>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-                
-                <div class="col-lg-2 col-md-6 mb-4">
-                    <h5 class="footer-title">Quick Links</h5>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="browse.html">Browse</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h5 class="footer-title">For Sellers</h5>
-                    <ul class="footer-links">
-                        <li><a href="seller-dashboard.html">Seller Dashboard</a></li>
-                        <li><a href="create-listing.html">Sell an Item</a></li>
-                    </ul>
-                </div>
-                
-                <div class="col-lg-3 mb-4">
-                    <h5 class="footer-title">Policies</h5>
-                    <ul class="footer-links">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Safety Guidelines</a></li>
-                    </ul>
-                    
-                    <h5 class="footer-title mt-4">Contact</h5>
-                    <div class="contact-info">
-                        <i class="fas fa-envelope"></i> support@aubazaar.africa.edu
-                    </div>
-                    <div class="contact-info">
-                        <i class="fas fa-phone"></i> +263 123 456 789
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 AUBazaar - Africa University. All rights reserved.</p>
-            </div>
+    <!-- Clean Register Card - Like Adobe -->
+    <div class="register-card">
+        <div class="register-header">
+            <h2>Join AUBazaar Today</h2>
+            <p>Africa University's trusted marketplace</p>
         </div>
-    </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+        <!-- Google Sign Up -->
+        <button class="btn-google">
+            <img src="https://www.google.com/favicon.ico" alt="Google">
+            Continue with Google
+        </button>
+
+        <div class="divider">
+            <span>or sign up with email</span>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registerForm">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="fullName" 
+                       placeholder="Enter your full name" required>
+            </div>
+            
+            <!-- University Email -->
+            <div class="form-group">
+                <label class="form-label">University Email</label>
+                <input type="email" class="form-control" id="email" 
+                       placeholder="your.name@students.africa.edu" required>
+                <div class="form-text">
+                    Use your @africa.edu or @students.africa.edu email
+                </div>
+            </div>
+            
+            <!-- Password -->
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" 
+                       placeholder="Create a password" required>
+            </div>
+            
+            <!-- Password Requirements -->
+            <div class="password-requirements" id="passwordRequirements">
+                <div class="requirement" id="lengthReq">
+                    <i class="far fa-circle"></i> At least 6 characters
+                </div>
+                <div class="requirement" id="numberReq">
+                    <i class="far fa-circle"></i> Contains at least one number
+                </div>
+                <div class="requirement" id="letterReq">
+                    <i class="far fa-circle"></i> Contains at least one letter
+                </div>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirmPassword" 
+                       placeholder="Confirm your password" required>
+                <div class="form-text" id="matchMessage"></div>
+            </div>
+            
+            <!-- User Type -->
+            <div class="form-group">
+                <label class="form-label">I am a:</label>
+                <select class="form-control" id="userType">
+                    <option value="student">Student</option>
+                    <option value="staff">Staff</option>
+                    <option value="faculty">Faculty</option>
+                </select>
+            </div>
+            
+            <!-- Terms Agreement -->
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input type="checkbox" id="terms" required>
+                    I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                </label>
+            </div>
+            
+            <!-- Message Area -->
+            <div id="registerMessage" class="alert"></div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary-custom" id="submitBtn">
+                Create Account
+            </button>
+            
+            <!-- Login Link -->
+            <div class="login-link">
+                Already have an account? <a href="login.html">Sign in</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer Links (like Adobe) -->
+    <div class="footer-links">
+        <a href="#">Terms of Use</a> | 
+        <a href="#">Cookie preferences</a> | 
+        <a href="#">Privacy</a> | 
+        <a href="#">Do not sell my information</a>
+        <div style="margin-top: 10px;">Copyright © 2024 AUBazaar. All rights reserved.</div>
+    </div>
+
     <!-- Registration JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -620,7 +425,6 @@
             function checkPasswordStrength() {
                 const pwd = password.value;
                 
-                // Length check
                 const lengthReq = document.getElementById('lengthReq');
                 if (pwd.length >= 6) {
                     lengthReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> At least 6 characters';
@@ -630,7 +434,6 @@
                     lengthReq.classList.remove('valid');
                 }
                 
-                // Number check
                 const numberReq = document.getElementById('numberReq');
                 if (/\d/.test(pwd)) {
                     numberReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> Contains at least one number';
@@ -640,7 +443,6 @@
                     numberReq.classList.remove('valid');
                 }
                 
-                // Letter check
                 const letterReq = document.getElementById('letterReq');
                 if (/[a-zA-Z]/.test(pwd)) {
                     letterReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> Contains at least one letter';
@@ -682,50 +484,43 @@
                 const userType = document.getElementById('userType').value;
                 const terms = document.getElementById('terms').checked;
                 
-                // Validation
                 if (!fullName || !email || !pwd || !confirmPwd) {
                     messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please fill in all fields';
                     return;
                 }
                 
-                // Email validation
                 if (!email.endsWith('@africa.edu') && !email.endsWith('@students.africa.edu')) {
                     messageDiv.className = 'alert alert-danger show';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email (@africa.edu or @students.africa.edu)';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email';
                     return;
                 }
                 
-                // Password strength
                 if (pwd.length < 6 || !/\d/.test(pwd) || !/[a-zA-Z]/.test(pwd)) {
                     messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Password does not meet requirements';
                     return;
                 }
                 
-                // Password match
                 if (pwd !== confirmPwd) {
                     messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Passwords do not match';
                     return;
                 }
                 
-                // Terms
                 if (!terms) {
                     messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>You must agree to the terms';
                     return;
                 }
                 
-                // Success - save user
+                // Success
                 const userData = {
                     name: fullName,
                     email: email,
-                    type: userType,
-                    registered: new Date().toISOString()
+                    type: userType
                 };
                 
-                // Save to localStorage
                 localStorage.setItem('registeredUser', JSON.stringify(userData));
                 
                 let users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
@@ -737,13 +532,11 @@
                 });
                 localStorage.setItem('aubazaarUsers', JSON.stringify(users));
                 
-                // Show success
                 messageDiv.className = 'alert alert-success show';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Redirecting to login...';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Redirecting...';
                 
                 submitBtn.disabled = true;
                 
-                // Redirect to login
                 setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 2000);
