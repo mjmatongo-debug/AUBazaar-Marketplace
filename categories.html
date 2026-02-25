@@ -34,7 +34,7 @@
             --au-dark: #212529;
         }
 
-        /* Navigation (same as other pages) */
+        /* Navigation */
         .navbar {
             background: var(--au-white) !important;
             padding: 1rem 0;
@@ -124,6 +124,52 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
             color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--au-red);
+            border: 2px solid var(--au-red);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--au-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--au-gray);
+        }
+
+        .search-input {
+            padding: 0.8rem 1rem 0.8rem 45px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--au-red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+            width: 350px;
         }
 
         /* Page Header */
@@ -276,19 +322,13 @@
             color: var(--au-red);
         }
 
-        .popular-tag {
-            display: inline-block;
-            background: var(--au-red);
-            color: white;
-            padding: 0.2rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            margin-left: 0.5rem;
-            vertical-align: middle;
+        /* Call to Action */
+        .cta-section {
+            padding: 60px 0;
+            text-align: center;
         }
 
-        /* Footer */
+        /* Footer - YOUR EXACT FOOTER */
         .footer {
             background: var(--au-dark);
             color: white;
@@ -373,6 +413,12 @@
             .page-title {
                 font-size: 2.2rem;
             }
+            .search-input {
+                width: 200px;
+            }
+            .search-input:focus {
+                width: 250px;
+            }
         }
     </style>
 </head>
@@ -409,12 +455,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">About</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
                 </ul>
                 
                 <div class="d-flex align-items-center gap-3">
                     <div class="search-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" placeholder="Search categories...">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search categories...">
                     </div>
                     <div class="d-flex gap-2">
                         <a href="login.html" class="btn-outline-custom">Login</a>
@@ -609,8 +658,8 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="py-5">
-        <div class="container text-center">
+    <section class="cta-section">
+        <div class="container">
             <h3 class="mb-3">Don't see your category?</h3>
             <p class="text-muted mb-4">You can list items in any category when you sell</p>
             <a href="create-listing.html" class="btn-primary-custom btn-lg">
@@ -619,13 +668,22 @@
         </div>
     </section>
 
-    <!-- Footer (use your existing footer with seller dashboard link) -->
+    <!-- YOUR EXACT FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 mb-4">
-                    <div class="footer-logo">AU<span>Bazaar</span></div>
-                    <p class="footer-text">Africa University's official online marketplace.</p>
+                    <div class="footer-logo">
+                        AU<span>Bazaar</span>
+                    </div>
+                    <p class="footer-text">
+                        Africa University's official online marketplace for secure and convenient exchange of goods and services.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
                 </div>
                 
                 <div class="col-lg-2 col-md-6 mb-4">
@@ -634,27 +692,38 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="browse.html">Browse</a></li>
                         <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer-title">For Sellers</h5>
                     <ul class="footer-links">
-                        <li><a href="seller-dashboard.html">📊 Dashboard</a></li>
-                        <li><a href="create-listing.html">➕ Sell an Item</a></li>
+                        <li><a href="seller-dashboard.html">Seller Dashboard</a></li>
+                        <li><a href="create-listing.html">Sell an Item</a></li>
                     </ul>
                 </div>
                 
                 <div class="col-lg-3 mb-4">
-                    <h5 class="footer-title">Account</h5>
+                    <h5 class="footer-title">Policies</h5>
                     <ul class="footer-links">
-                        <li><a href="login.html">Login</a></li>
-                        <li><a href="register.html">Register</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
                     </ul>
+                    
+                    <h5 class="footer-title mt-4">Contact</h5>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i> support@aubazaar.africa.edu
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i> +263 123 456 789
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 AUBazaar - Africa University</p>
+                <p>&copy; 2024 AUBazaar - Africa University. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -663,7 +732,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Search functionality
-        document.querySelector('.search-input').addEventListener('keypress', function(e) {
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const searchTerm = this.value;
                 if (searchTerm.trim()) {
