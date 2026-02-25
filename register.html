@@ -8,229 +8,748 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .register-card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+
+        :root {
+            --au-red: #C41E3A;
+            --au-red-dark: #9B152C;
+            --au-red-light: #FF4D6D;
+            --au-white: #FFFFFF;
+            --au-offwhite: #F8F9FA;
+            --au-gray: #6C757D;
+            --au-dark: #212529;
         }
-        .register-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        /* Navigation */
+        .navbar {
+            background: var(--au-white) !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: var(--au-red);
             color: white;
-            border-radius: 15px 15px 0 0;
-            padding: 20px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transform: rotate(-5deg);
+            transition: transform 0.3s;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(0deg);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span:first-child {
+            color: var(--au-dark);
+        }
+
+        .text-red {
+            color: var(--au-red);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--au-dark) !important;
+            margin: 0 0.5rem;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--au-red);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--au-red) !important;
+        }
+
+        .btn-primary-custom {
+            background: var(--au-red);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--au-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--au-red);
+            border: 2px solid var(--au-red);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--au-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Register Container */
+        .register-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 0 60px;
+        }
+
+        .register-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            overflow: hidden;
+            max-width: 500px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .register-header {
+            background: linear-gradient(135deg, var(--au-red) 0%, var(--au-red-dark) 100%);
+            color: white;
+            padding: 2rem;
             text-align: center;
         }
+
+        .register-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: rgba(255,255,255,0.2);
+            width: 80px;
+            height: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .register-header h2 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            opacity: 0.9;
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
         .register-body {
-            padding: 30px;
+            padding: 2rem;
         }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--au-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-label i {
+            color: var(--au-red);
+            width: 20px;
+        }
+
         .form-control {
-            border-radius: 10px;
-            padding: 12px;
             border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
         }
+
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            outline: none;
+            border-color: var(--au-red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
         }
-        .btn-register {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 10px;
-            padding: 12px;
-            color: white;
-            font-weight: bold;
-            width: 100%;
-            transition: transform 0.2s;
+
+        .form-text {
+            color: var(--au-gray);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
         }
-        .btn-register:hover {
-            transform: translateY(-2px);
-            color: white;
+
+        .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
         }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--au-red);
+        }
+
+        .password-requirements {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+        }
+
+        .requirement {
+            color: var(--au-gray);
+            margin-bottom: 0.3rem;
+        }
+
+        .requirement.valid {
+            color: #28a745;
+        }
+
+        .requirement i {
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
         .alert {
-            border-radius: 10px;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .login-link a {
+            color: var(--au-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--au-dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: auto;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--au-red);
+        }
+
+        .footer-text {
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--au-red);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--au-red);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            color: #999;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info i {
+            color: var(--au-red);
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .register-wrapper {
+                padding: 80px 0 40px;
+            }
+            .register-body {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Simple Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <i class="fas fa-university text-primary"></i>
-                <span class="fw-bold text-primary">AUBazaar</span>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span>AU</span><span class="text-red">Bazaar</span>
+                    </div>
+                </div>
             </a>
-            <div>
-                <a href="login.html" class="btn btn-outline-primary me-2">Login</a>
-                <a href="register.html" class="btn btn-primary">Register</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse.html">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="categories.html">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <a href="login.html" class="btn-outline-custom">Login</a>
+                    <a href="seller-dashboard.html" class="btn-primary-custom">
+                        <i class="fas fa-store me-2"></i>Dashboard
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Register Form -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card register-card">
-                    <div class="register-header">
-                        <i class="fas fa-user-plus fa-3x mb-3"></i>
-                        <h3>Join AUBazaar Today!</h3>
-                        <p class="mb-0">Africa University's trusted marketplace</p>
+    <!-- Register Form -->
+    <div class="register-wrapper">
+        <div class="register-card">
+            <div class="register-header">
+                <i class="fas fa-user-plus"></i>
+                <h2>Join AUBazaar Today!</h2>
+                <p>Africa University's trusted marketplace</p>
+            </div>
+            
+            <div class="register-body">
+                <form id="registerForm">
+                    <!-- Full Name -->
+                    <label class="form-label">
+                        <i class="fas fa-user"></i>
+                        Full Name
+                    </label>
+                    <input type="text" class="form-control" id="fullName" 
+                           placeholder="Enter your full name" required>
+                    
+                    <!-- University Email -->
+                    <label class="form-label">
+                        <i class="fas fa-envelope"></i>
+                        University Email
+                    </label>
+                    <input type="email" class="form-control" id="email" 
+                           placeholder="your.name@students.africa.edu" required>
+                    <div class="form-text">
+                        <i class="fas fa-info-circle"></i>
+                        Use your @africa.edu or @students.africa.edu email
                     </div>
                     
-                    <div class="register-body">
-                        <!-- IMPORTANT: This form has an ID so JavaScript can find it -->
-                        <form id="registerForm">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Full Name</label>
-                                <input type="text" class="form-control" id="fullName" 
-                                       placeholder="Enter your full name" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">University Email</label>
-                                <input type="email" class="form-control" id="email" 
-                                       placeholder="your.name@students.africa.edu" required>
-                                <small class="text-muted">Use your @africa.edu or @students.africa.edu email</small>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Password</label>
-                                <input type="password" class="form-control" id="password" 
-                                       placeholder="Create a password" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirmPassword" 
-                                       placeholder="Confirm your password" required>
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">I am a:</label>
-                                <select class="form-control" id="userType">
-                                    <option value="student">Student</option>
-                                    <option value="staff">Staff</option>
-                                    <option value="faculty">Faculty</option>
-                                </select>
-                            </div>
-                            
-                            <!-- This is where messages will appear -->
-                            <div id="registerMessage" class="alert" style="display: none;"></div>
-                            
-                            <button type="submit" class="btn-register">
-                                <i class="fas fa-user-plus me-2"></i>Create Account
-                            </button>
-                        </form>
-                        
-                        <div class="text-center mt-4">
-                            <p>Already have an account? <a href="login.html" class="text-primary">Login here</a></p>
+                    <!-- Password -->
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" class="form-control" id="password" 
+                           placeholder="Create a password" required>
+                    
+                    <!-- Password Requirements -->
+                    <div class="password-requirements" id="passwordRequirements">
+                        <div class="requirement" id="lengthReq">
+                            <i class="far fa-circle"></i> At least 6 characters
+                        </div>
+                        <div class="requirement" id="numberReq">
+                            <i class="far fa-circle"></i> Contains at least one number
+                        </div>
+                        <div class="requirement" id="letterReq">
+                            <i class="far fa-circle"></i> Contains at least one letter
                         </div>
                     </div>
-                </div>
+                    
+                    <!-- Confirm Password -->
+                    <label class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Confirm Password
+                    </label>
+                    <input type="password" class="form-control" id="confirmPassword" 
+                           placeholder="Confirm your password" required>
+                    <div class="form-text" id="matchMessage"></div>
+                    
+                    <!-- User Type -->
+                    <label class="form-label">
+                        <i class="fas fa-tag"></i>
+                        I am a:
+                    </label>
+                    <select class="form-select" id="userType">
+                        <option value="student">Student</option>
+                        <option value="staff">Staff</option>
+                        <option value="faculty">Faculty</option>
+                    </select>
+                    
+                    <!-- Terms Agreement -->
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="terms" required>
+                        <label class="form-check-label" for="terms">
+                            I agree to the <a href="#">Terms of Service</a> and 
+                            <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <!-- Message Area -->
+                    <div id="registerMessage" class="alert"></div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-primary-custom w-100" id="submitBtn">
+                        <i class="fas fa-user-plus me-2"></i>Create Account
+                    </button>
+                    
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        Already have an account? <a href="login.html">Login here</a>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript that makes registration work -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        AU<span>Bazaar</span>
+                    </div>
+                    <p class="footer-text">
+                        Africa University's official online marketplace for secure and convenient exchange of goods and services.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="browse.html">Browse</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">For Sellers</h5>
+                    <ul class="footer-links">
+                        <li><a href="seller-dashboard.html">Seller Dashboard</a></li>
+                        <li><a href="create-listing.html">Sell an Item</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <h5 class="footer-title">Policies</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                    
+                    <h5 class="footer-title mt-4">Contact</h5>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i> support@aubazaar.africa.edu
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i> +263 123 456 789
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AUBazaar - Africa University. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Registration JavaScript -->
     <script>
-        // Wait for the page to load
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the form element
             const form = document.getElementById('registerForm');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const matchMessage = document.getElementById('matchMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            const messageDiv = document.getElementById('registerMessage');
             
-            // Add submit event listener
+            // Password requirements check
+            function checkPasswordStrength() {
+                const pwd = password.value;
+                
+                // Length check
+                const lengthReq = document.getElementById('lengthReq');
+                if (pwd.length >= 6) {
+                    lengthReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> At least 6 characters';
+                    lengthReq.classList.add('valid');
+                } else {
+                    lengthReq.innerHTML = '<i class="far fa-circle"></i> At least 6 characters';
+                    lengthReq.classList.remove('valid');
+                }
+                
+                // Number check
+                const numberReq = document.getElementById('numberReq');
+                if (/\d/.test(pwd)) {
+                    numberReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> Contains at least one number';
+                    numberReq.classList.add('valid');
+                } else {
+                    numberReq.innerHTML = '<i class="far fa-circle"></i> Contains at least one number';
+                    numberReq.classList.remove('valid');
+                }
+                
+                // Letter check
+                const letterReq = document.getElementById('letterReq');
+                if (/[a-zA-Z]/.test(pwd)) {
+                    letterReq.innerHTML = '<i class="fas fa-check-circle text-success"></i> Contains at least one letter';
+                    letterReq.classList.add('valid');
+                } else {
+                    letterReq.innerHTML = '<i class="far fa-circle"></i> Contains at least one letter';
+                    letterReq.classList.remove('valid');
+                }
+            }
+            
+            password.addEventListener('input', checkPasswordStrength);
+            
+            // Confirm password match
+            function checkPasswordMatch() {
+                if (confirmPassword.value) {
+                    if (password.value === confirmPassword.value) {
+                        matchMessage.innerHTML = '<i class="fas fa-check-circle text-success"></i> Passwords match';
+                        matchMessage.style.color = '#28a745';
+                    } else {
+                        matchMessage.innerHTML = '<i class="fas fa-exclamation-circle text-danger"></i> Passwords do not match';
+                        matchMessage.style.color = '#dc3545';
+                    }
+                } else {
+                    matchMessage.innerHTML = '';
+                }
+            }
+            
+            password.addEventListener('input', checkPasswordMatch);
+            confirmPassword.addEventListener('input', checkPasswordMatch);
+            
+            // Form submission
             form.addEventListener('submit', function(e) {
-                // Stop the form from actually submitting (refreshing page)
                 e.preventDefault();
                 
-                // Get all the values from the form
                 const fullName = document.getElementById('fullName').value.trim();
                 const email = document.getElementById('email').value.trim();
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirmPassword').value;
+                const pwd = password.value;
+                const confirmPwd = confirmPassword.value;
                 const userType = document.getElementById('userType').value;
-                const messageDiv = document.getElementById('registerMessage');
+                const terms = document.getElementById('terms').checked;
                 
-                // ========== VALIDATION CHECKS ==========
-                
-                // Check if any field is empty
-                if (!fullName || !email || !password || !confirmPassword) {
-                    messageDiv.style.display = 'block';
-                    messageDiv.className = 'alert alert-danger';
+                // Validation
+                if (!fullName || !email || !pwd || !confirmPwd) {
+                    messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please fill in all fields';
                     return;
                 }
                 
-                // Check if email ends with @africa.edu or @students.africa.edu
+                // Email validation
                 if (!email.endsWith('@africa.edu') && !email.endsWith('@students.africa.edu')) {
-                    messageDiv.style.display = 'block';
-                    messageDiv.className = 'alert alert-danger';
+                    messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email (@africa.edu or @students.africa.edu)';
                     return;
                 }
                 
-                // Check if passwords match
-                if (password !== confirmPassword) {
-                    messageDiv.style.display = 'block';
-                    messageDiv.className = 'alert alert-danger';
+                // Password strength
+                if (pwd.length < 6 || !/\d/.test(pwd) || !/[a-zA-Z]/.test(pwd)) {
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Password does not meet requirements';
+                    return;
+                }
+                
+                // Password match
+                if (pwd !== confirmPwd) {
+                    messageDiv.className = 'alert alert-danger show';
                     messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Passwords do not match';
                     return;
                 }
                 
-                // Check password length (minimum 6 characters)
-                if (password.length < 6) {
-                    messageDiv.style.display = 'block';
-                    messageDiv.className = 'alert alert-danger';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Password must be at least 6 characters';
+                // Terms
+                if (!terms) {
+                    messageDiv.className = 'alert alert-danger show';
+                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>You must agree to the terms';
                     return;
                 }
                 
-                // ========== IF ALL CHECKS PASS ==========
-                
-                // Show success message
-                messageDiv.style.display = 'block';
-                messageDiv.className = 'alert alert-success';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Redirecting to login...';
-                
-                // SAVE USER DATA (this is like a fake database using browser storage)
-                // In a real app, this would go to a server
+                // Success - save user
                 const userData = {
                     name: fullName,
                     email: email,
                     type: userType,
-                    registered: new Date().toLocaleString()
+                    registered: new Date().toISOString()
                 };
                 
-                // Save to browser's localStorage
+                // Save to localStorage
                 localStorage.setItem('registeredUser', JSON.stringify(userData));
                 
-                // Also save that this user is now "registered" so login page can check
                 let users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
                 users.push({
                     email: email,
-                    password: password, // In real app, NEVER store plain passwords!
+                    password: pwd,
                     name: fullName,
                     type: userType
                 });
                 localStorage.setItem('aubazaarUsers', JSON.stringify(users));
                 
-                // Disable the submit button to prevent double submission
-                document.querySelector('.btn-register').disabled = true;
+                // Show success
+                messageDiv.className = 'alert alert-success show';
+                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Redirecting to login...';
                 
-                // Redirect to login page after 2 seconds
-                setTimeout(function() {
+                submitBtn.disabled = true;
+                
+                // Redirect to login
+                setTimeout(() => {
                     window.location.href = 'login.html';
                 }, 2000);
             });
         });
     </script>
-    
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
