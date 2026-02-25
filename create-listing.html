@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Item - AUBazaar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-university text-primary"></i>
+                <span class="fw-bold text-primary">AUBazaar</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Create Listing Form -->
+    <div class="container mt-5 pt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4">Sell an Item</h2>
+                        
+                        <form>
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" placeholder="e.g., Calculus Textbook">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" rows="4" placeholder="Describe your item..."></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Price ($)</label>
+                                    <input type="number" class="form-control" placeholder="25.00">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select">
+                                        <option>Textbooks</option>
+                                        <option>Electronics</option>
+                                        <option>Furniture</option>
+                                        <option>Clothing</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Condition</label>
+                                <select class="form-select">
+                                    <option>New</option>
+                                    <option>Like New</option>
+                                    <option>Good</option>
+                                    <option>Fair</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Location on Campus</label>
+                                <input type="text" class="form-control" placeholder="e.g., Library, Dormitory A">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Photos</label>
+                                <input type="file" class="form-control" multiple>
+                                <small class="text-muted">You can upload up to 5 photos</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Post Listing</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
