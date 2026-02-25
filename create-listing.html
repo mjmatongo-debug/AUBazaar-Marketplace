@@ -3,79 +3,1064 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sell Item - AUBazaar</title>
+    <title>Sell an Item - AUBazaar</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            padding-top: 80px;
+        }
+
+        :root {
+            --au-red: #C41E3A;
+            --au-red-dark: #9B152C;
+            --au-red-light: #FF4D6D;
+            --au-white: #FFFFFF;
+            --au-offwhite: #F8F9FA;
+            --au-gray: #6C757D;
+            --au-dark: #212529;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--au-white) !important;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            background: var(--au-red);
+            color: white;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            transform: rotate(-5deg);
+            transition: transform 0.3s;
+        }
+
+        .logo-icon:hover {
+            transform: rotate(0deg);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span:first-child {
+            color: var(--au-dark);
+        }
+
+        .text-red {
+            color: var(--au-red);
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--au-dark) !important;
+            margin: 0 0.5rem;
+            position: relative;
+            padding: 0.5rem 1rem !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--au-red);
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 70%;
+        }
+
+        .nav-link.active {
+            color: var(--au-red) !important;
+        }
+
+        .btn-primary-custom {
+            background: var(--au-red);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            background: var(--au-red-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(196, 30, 58, 0.2);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--au-red);
+            border: 2px solid var(--au-red);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--au-red);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Search Bar */
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--au-gray);
+        }
+
+        .search-input {
+            padding: 0.8rem 1rem 0.8rem 45px;
+            border: 1px solid #e0e0e0;
+            border-radius: 50px;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--au-red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+            width: 350px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--au-offwhite) 0%, white 100%);
+            padding: 40px 0 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--au-dark);
+        }
+
+        .page-title span {
+            color: var(--au-red);
+            position: relative;
+        }
+
+        .page-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(196, 30, 58, 0.2);
+            z-index: -1;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+        }
+
+        .breadcrumb-item a {
+            color: var(--au-gray);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--au-red);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--au-red);
+        }
+
+        /* Seller Profile Card */
+        .seller-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid #f0f0f0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .seller-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--au-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .seller-info h3 {
+            margin-bottom: 0.3rem;
+            font-weight: 700;
+        }
+
+        .seller-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-badge {
+            background: var(--au-offwhite);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        .stat-badge i {
+            color: var(--au-red);
+            margin-right: 0.3rem;
+        }
+
+        .rating {
+            color: #ffc107;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            border: 1px solid #f0f0f0;
+            margin-bottom: 30px;
+        }
+
+        .form-section-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f0f0f0;
+            color: var(--au-dark);
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--au-dark);
+        }
+
+        .form-control, .form-select {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--au-red);
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        .form-text {
+            font-size: 0.85rem;
+            color: var(--au-gray);
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Photo Upload */
+        .photo-upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .photo-upload-area:hover {
+            border-color: var(--au-red);
+            background: rgba(196, 30, 58, 0.02);
+        }
+
+        .photo-upload-area i {
+            font-size: 2.5rem;
+            color: var(--au-gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .photo-preview {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .preview-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            background: var(--au-red);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        /* Tips Card */
+        .tips-card {
+            background: var(--au-offwhite);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid #e0e0e0;
+            position: sticky;
+            top: 100px;
+        }
+
+        .tips-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--au-dark);
+        }
+
+        .tips-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tips-list li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            gap: 0.8rem;
+            align-items: start;
+        }
+
+        .tips-list li i {
+            color: var(--au-red);
+            margin-top: 0.2rem;
+        }
+
+        .example-badge {
+            background: white;
+            border-radius: 50px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            color: var(--au-red);
+            border: 1px solid var(--au-red);
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--au-dark);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--au-red);
+        }
+
+        .footer-text {
+            color: #999;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--au-red);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s, padding-left 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--au-red);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            color: #999;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-info i {
+            color: var(--au-red);
+            width: 25px;
+            margin-right: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 30px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .search-input {
+                width: 200px;
+            }
+            .search-input:focus {
+                width: 250px;
+            }
+            .seller-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            .seller-stats {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <!-- Navigation Bar (same as homepage) -->
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <i class="fas fa-university text-primary"></i>
-                <span class="fw-bold text-primary">AUBazaar</span>
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span>AU</span><span class="text-red">Bazaar</span>
+                    </div>
+                </div>
             </a>
-        </div>
-    </nav>
-
-    <!-- Create Listing Form -->
-    <div class="container mt-5 pt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-body p-5">
-                        <h2 class="text-center mb-4">Sell an Item</h2>
-                        
-                        <form>
-                            <div class="mb-3">
-                                <label class="form-label">Title</label>
-                                <input type="text" class="form-control" placeholder="e.g., Calculus Textbook">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Description</label>
-                                <textarea class="form-control" rows="4" placeholder="Describe your item..."></textarea>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Price ($)</label>
-                                    <input type="number" class="form-control" placeholder="25.00">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Category</label>
-                                    <select class="form-select">
-                                        <option>Textbooks</option>
-                                        <option>Electronics</option>
-                                        <option>Furniture</option>
-                                        <option>Clothing</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Condition</label>
-                                <select class="form-select">
-                                    <option>New</option>
-                                    <option>Like New</option>
-                                    <option>Good</option>
-                                    <option>Fair</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Location on Campus</label>
-                                <input type="text" class="form-control" placeholder="e.g., Library, Dormitory A">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Photos</label>
-                                <input type="file" class="form-control" multiple>
-                                <small class="text-muted">You can upload up to 5 photos</small>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">Post Listing</button>
-                        </form>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="browse.html">Browse</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="categories.html">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center gap-3">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search"></i>
+                        <input type="text" class="search-input" placeholder="Search items...">
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="login.html" class="btn-outline-custom">Login</a>
+                        <a href="register.html" class="btn-primary-custom">Register</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Sell an Item</li>
+                </ol>
+            </nav>
+            <h1 class="page-title">Sell an <span>Item</span></h1>
+            <p class="text-muted">List your item and start selling to the Africa University community</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="pb-5">
+        <div class="container">
+            <div class="row">
+                <!-- Left Column - Seller Info & Tips -->
+                <div class="col-lg-4">
+                    <!-- Seller Profile Card -->
+                    <div class="seller-card" id="sellerCard">
+                        <div class="seller-avatar" id="sellerInitials">JD</div>
+                        <div class="seller-info">
+                            <h3 id="sellerName">John Doe</h3>
+                            <div class="rating" id="sellerRating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="ms-2 text-dark">4.5</span>
+                            </div>
+                            <div class="seller-stats">
+                                <span class="stat-badge"><i class="fas fa-tag"></i> 12 sold</span>
+                                <span class="stat-badge"><i class="fas fa-clock"></i> 3 months</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tips Card -->
+                    <div class="tips-card">
+                        <h5 class="tips-title"><i class="fas fa-lightbulb text-warning me-2"></i>Tips for selling</h5>
+                        <ul class="tips-list">
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong>Clear photos</strong> <span class="example-badge">Example</span><br>
+                                <small>Take photos in good lighting</small></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong>Detailed description</strong><br>
+                                <small>Include condition, size, specs</small></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong>Fair price</strong><br>
+                                <small>Check what others are charging</small></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong>Respond quickly</strong><br>
+                                <small>Buyers love fast replies</small></span>
+                            </li>
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span><strong>Meet in safe places</strong><br>
+                                <small>Library, Student Center, etc.</small></span>
+                            </li>
+                        </ul>
+                        <hr>
+                        <div class="text-center">
+                            <small class="text-muted">Your items get <strong>1,234 views</strong> on average</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Sell Form -->
+                <div class="col-lg-8">
+                    <div class="form-container">
+                        <h5 class="form-section-title">Item Details</h5>
+                        
+                        <form id="sellForm">
+                            <!-- Title -->
+                            <label class="form-label">Title <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="itemTitle" placeholder="e.g., Calculus Textbook - 3rd Edition" required>
+                            <div class="form-text">Choose a clear title that describes your item</div>
+
+                            <!-- Description -->
+                            <label class="form-label">Description <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="itemDescription" rows="4" placeholder="Describe your item's condition, features, why someone should buy it..." required></textarea>
+                            <div class="form-text">Be honest about the condition. Mention any defects.</div>
+
+                            <!-- Price and Category Row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Price ($) <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" id="itemPrice" placeholder="25.00" step="0.01" min="0" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="itemCategory" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="textbooks">Textbooks</option>
+                                        <option value="electronics">Electronics</option>
+                                        <option value="furniture">Furniture</option>
+                                        <option value="clothing">Clothing</option>
+                                        <option value="dorm">Dorm Essentials</option>
+                                        <option value="sports">Sports Equipment</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Condition and Location Row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="form-label">Condition <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="itemCondition" required>
+                                        <option value="" disabled selected>Select condition</option>
+                                        <option value="new">New - Never used</option>
+                                        <option value="like-new">Like New - Used once or twice</option>
+                                        <option value="good">Good - Minor signs of wear</option>
+                                        <option value="fair">Fair - Visible wear but functional</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Location on Campus <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="itemLocation" placeholder="e.g., Library, Dorm A, Science Building" required>
+                                </div>
+                            </div>
+
+                            <!-- Photos -->
+                            <label class="form-label">Photos <span class="text-danger">*</span></label>
+                            <div class="photo-upload-area" id="photoUploadArea">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h6>Click to upload photos</h6>
+                                <p class="text-muted small mb-0">or drag and drop</p>
+                                <input type="file" id="photoInput" multiple accept="image/*" style="display: none;">
+                            </div>
+                            <div class="photo-preview" id="photoPreview"></div>
+                            <div class="form-text">You can upload up to 5 photos. First photo will be the cover.</div>
+
+                            <!-- Submit Button -->
+                            <div class="d-flex gap-3 mt-4">
+                                <button type="submit" class="btn-primary-custom flex-grow-1">
+                                    <i class="fas fa-cloud-upload-alt me-2"></i>Post Listing
+                                </button>
+                                <button type="button" class="btn-outline-custom" onclick="window.location.href='browse.html'">
+                                    Cancel
+                                </button>
+                            </div>
+
+                            <!-- Success Message (hidden by default) -->
+                            <div id="successMessage" class="alert alert-success mt-4" style="display: none;">
+                                <i class="fas fa-check-circle me-2"></i>
+                                <strong>Success!</strong> Your item has been listed. <a href="browse.html" class="alert-link">View it here</a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Quick Tips for This Category -->
+                    <div class="form-container mt-4" id="categoryTips" style="display: none;">
+                        <h5 class="form-section-title" id="tipTitle">Tips for selling Textbooks</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="tips-list">
+                                    <li><i class="fas fa-check text-success"></i> Include ISBN number</li>
+                                    <li><i class="fas fa-check text-success"></i> Mention edition (3rd, 4th, etc.)</li>
+                                    <li><i class="fas fa-check text-success"></i> Note any highlighting/writing</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="tips-list">
+                                    <li><i class="fas fa-check text-success"></i> Show cover photo</li>
+                                    <li><i class="fas fa-check text-success"></i> Mention if included access code</li>
+                                    <li><i class="fas fa-check text-success"></i> Compare prices online</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">
+                        AU<span>Bazaar</span>
+                    </div>
+                    <p class="footer-text">
+                        Africa University's official online marketplace for secure and convenient exchange of goods and services.
+                    </p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="browse.html">Browse</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="footer-title">Policies</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Safety Guidelines</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5 class="footer-title">Contact</h5>
+                    <div class="contact-info">
+                        <i class="fas fa-envelope"></i> support@aubazaar.africa.edu
+                    </div>
+                    <div class="contact-info">
+                        <i class="fas fa-phone"></i> +263 123 456 789
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 AUBazaar - Africa University. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Sell Page JavaScript -->
+    <script>
+        // ========== LOAD SELLER INFO ==========
+        function loadSellerInfo() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (!isLoggedIn) {
+                // Redirect to login if not logged in
+                window.location.href = 'login.html?redirect=create-listing.html';
+                return;
+            }
+            
+            // Get username from email or use display name
+            let displayName = user.name || user.fullName || 'Seller';
+            let initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+            if (initials.length < 2) {
+                initials = displayName.substring(0, 2).toUpperCase();
+            }
+            
+            // Update seller card
+            document.getElementById('sellerName').textContent = displayName;
+            document.getElementById('sellerInitials').textContent = initials;
+            
+            // Load seller stats from localStorage
+            const sellerStats = JSON.parse(localStorage.getItem('sellerStats_' + user.email) || '{"sold":0, "rating":4.5, "memberSince": "3 months"}');
+            
+            document.querySelector('.stat-badge:first-child').innerHTML = `<i class="fas fa-tag"></i> ${sellerStats.sold || 0} sold`;
+            document.querySelector('.stat-badge:last-child').innerHTML = `<i class="fas fa-clock"></i> ${sellerStats.memberSince || 'New'}`;
+        }
+
+        // ========== PHOTO UPLOAD ==========
+        const photoArea = document.getElementById('photoUploadArea');
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        let uploadedFiles = [];
+
+        photoArea.addEventListener('click', () => {
+            photoInput.click();
+        });
+
+        photoArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoArea.style.borderColor = 'var(--au-red)';
+            photoArea.style.background = 'rgba(196, 30, 58, 0.02)';
+        });
+
+        photoArea.addEventListener('dragleave', () => {
+            photoArea.style.borderColor = '#e0e0e0';
+            photoArea.style.background = 'transparent';
+        });
+
+        photoArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            photoArea.style.borderColor = '#e0e0e0';
+            photoArea.style.background = 'transparent';
+            
+            const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            handleFiles(files);
+        });
+
+        photoInput.addEventListener('change', (e) => {
+            const files = Array.from(e.target.files);
+            handleFiles(files);
+        });
+
+        function handleFiles(files) {
+            if (uploadedFiles.length + files.length > 5) {
+                alert('You can only upload up to 5 photos');
+                return;
+            }
+            
+            files.forEach(file => {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File too large. Maximum size is 5MB');
+                    return;
+                }
+                
+                uploadedFiles.push(file);
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.createElement('div');
+                    preview.style.position = 'relative';
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" class="preview-image">
+                        <div class="remove-image" onclick="removeFile(${uploadedFiles.length - 1})">×</div>
+                    `;
+                    photoPreview.appendChild(preview);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        window.removeFile = function(index) {
+            uploadedFiles.splice(index, 1);
+            photoPreview.innerHTML = '';
+            uploadedFiles.forEach((file, i) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.createElement('div');
+                    preview.style.position = 'relative';
+                    preview.innerHTML = `
+                        <img src="${e.target.result}" class="preview-image">
+                        <div class="remove-image" onclick="removeFile(${i})">×</div>
+                    `;
+                    photoPreview.appendChild(preview);
+                };
+                reader.readAsDataURL(file);
+            });
+        };
+
+        // ========== CATEGORY TIPS ==========
+        document.getElementById('itemCategory').addEventListener('change', function() {
+            const category = this.value;
+            const tipsDiv = document.getElementById('categoryTips');
+            const tipTitle = document.getElementById('tipTitle');
+            
+            if (category) {
+                tipsDiv.style.display = 'block';
+                
+                const tips = {
+                    'textbooks': {
+                        title: 'Tips for selling Textbooks',
+                        tips: [
+                            'Include ISBN number',
+                            'Mention edition (3rd, 4th, etc.)',
+                            'Note any highlighting/writing',
+                            'Show cover photo',
+                            'Mention if access code included'
+                        ]
+                    },
+                    'electronics': {
+                        title: 'Tips for selling Electronics',
+                        tips: [
+                            'Include model number',
+                            'Mention condition (scratches, battery life)',
+                            'List included accessories (charger, cables)',
+                            'Show item working if possible',
+                            'Specify storage capacity/specs'
+                        ]
+                    },
+                    'furniture': {
+                        title: 'Tips for selling Furniture',
+                        tips: [
+                            'Include dimensions',
+                            'Mention color/material',
+                            'Note any damage/stains',
+                            'Show multiple angles',
+                            'Specify if assembly required'
+                        ]
+                    },
+                    'clothing': {
+                        title: 'Tips for selling Clothing',
+                        tips: [
+                            'Include size (S, M, L)',
+                            'Mention brand',
+                            'Note condition (new, worn)',
+                            'List material (cotton, polyester)',
+                            'Show tag/logo photo'
+                        ]
+                    },
+                    'dorm': {
+                        title: 'Tips for selling Dorm Essentials',
+                        tips: [
+                            'Include dimensions',
+                            'Mention if it folds/stores easily',
+                            'Note power requirements',
+                            'Show setup if possible',
+                            'Specify what\'s included'
+                        ]
+                    }
+                };
+                
+                const categoryTips = tips[category] || tips['textbooks'];
+                tipTitle.textContent = categoryTips.title;
+                
+                let html = '<div class="row"><div class="col-md-6"><ul class="tips-list">';
+                categoryTips.tips.slice(0, 3).forEach(tip => {
+                    html += `<li><i class="fas fa-check text-success"></i> ${tip}</li>`;
+                });
+                html += '</ul></div><div class="col-md-6"><ul class="tips-list">';
+                categoryTips.tips.slice(3).forEach(tip => {
+                    html += `<li><i class="fas fa-check text-success"></i> ${tip}</li>`;
+                });
+                html += '</ul></div></div>';
+                
+                tipsDiv.innerHTML = `<h5 class="form-section-title">${categoryTips.title}</h5>${html}`;
+            } else {
+                tipsDiv.style.display = 'none';
+            }
+        });
+
+        // ========== FORM SUBMISSION ==========
+        document.getElementById('sellForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const title = document.getElementById('itemTitle').value;
+            const description = document.getElementById('itemDescription').value;
+            const price = document.getElementById('itemPrice').value;
+            const category = document.getElementById('itemCategory').value;
+            const condition = document.getElementById('itemCondition').value;
+            const location = document.getElementById('itemLocation').value;
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            // Validate
+            if (!title || !description || !price || !category || !condition || !location) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            if (uploadedFiles.length === 0) {
+                alert('Please upload at least one photo');
+                return;
+            }
+            
+            // Create listing object
+            const listing = {
+                id: Date.now(),
+                title: title,
+                description: description,
+                price: parseFloat(price),
+                category: category,
+                condition: condition,
+                location: location,
+                seller: user.email || 'unknown',
+                sellerName: user.name || user.fullName || 'Seller',
+                sellerRating: 4.5,
+                date: new Date().toISOString(),
+                views: 0,
+                image: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500' // placeholder
+            };
+            
+            // Save to localStorage
+            let listings = JSON.parse(localStorage.getItem('listings') || '[]');
+            listings.push(listing);
+            localStorage.setItem('listings', JSON.stringify(listings));
+            
+            // Update seller stats
+            let sellerStats = JSON.parse(localStorage.getItem('sellerStats_' + user.email) || '{"sold":0, "rating":4.5, "memberSince": "3 months"}');
+            localStorage.setItem('sellerStats_' + user.email, JSON.stringify(sellerStats));
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            photoPreview.innerHTML = '';
+            uploadedFiles = [];
+            
+            // Scroll to success message
+            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSellerInfo();
+        });
+    </script>
 </body>
 </html>
