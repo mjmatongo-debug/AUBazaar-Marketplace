@@ -11,6 +11,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ALL YOUR EXISTING STYLES HERE - keeping them the same */
         * {
             margin: 0;
             padding: 0;
@@ -23,7 +24,6 @@
             color: #333;
         }
 
-        /* School Colors */
         :root {
             --au-red: #C41E3A;
             --au-red-dark: #9B152C;
@@ -211,6 +211,10 @@
         .breadcrumb-item a {
             color: var(--au-gray);
             text-decoration: none;
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--au-red);
         }
 
         .breadcrumb-item.active {
@@ -490,6 +494,7 @@
             justify-content: center;
             color: var(--au-gray);
             transition: all 0.3s;
+            text-decoration: none;
         }
 
         .btn-cart:hover {
@@ -511,6 +516,7 @@
             margin: 0 0.2rem;
             border-radius: 8px;
             font-weight: 500;
+            text-decoration: none;
         }
 
         .page-item.active .page-link {
@@ -604,7 +610,6 @@
             color: #666;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .search-input {
                 width: 200px;
@@ -620,7 +625,7 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Bar (same as homepage) -->
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="index.html">
@@ -660,7 +665,7 @@
                 <div class="d-flex align-items-center gap-3">
                     <div class="search-wrapper">
                         <i class="fas fa-search"></i>
-                        <input type="text" class="search-input" placeholder="Search items...">
+                        <input type="text" class="search-input" placeholder="Search items..." id="searchInput">
                     </div>
                     <div class="d-flex gap-2">
                         <a href="login.html" class="btn-outline-custom">Login</a>
@@ -726,38 +731,38 @@
                         <div class="filter-section">
                             <h6>Price Range</h6>
                             <div class="price-range">
-                                <input type="number" class="price-input" placeholder="Min" value="0">
+                                <input type="number" class="price-input" id="minPrice" placeholder="Min" value="0">
                                 <span>-</span>
-                                <input type="number" class="price-input" placeholder="Max" value="1000">
+                                <input type="number" class="price-input" id="maxPrice" placeholder="Max" value="1000">
                             </div>
-                            <button class="btn-primary-custom w-100 mt-2" style="padding: 0.5rem;">Apply</button>
+                            <button class="btn-primary-custom w-100 mt-2" style="padding: 0.5rem;" onclick="applyPriceFilter()">Apply</button>
                         </div>
 
                         <!-- Condition -->
                         <div class="filter-section">
                             <h6>Condition</h6>
                             <div>
-                                <span class="condition-badge-filter active">All</span>
-                                <span class="condition-badge-filter">New</span>
-                                <span class="condition-badge-filter">Like New</span>
-                                <span class="condition-badge-filter">Good</span>
-                                <span class="condition-badge-filter">Fair</span>
+                                <span class="condition-badge-filter active" onclick="filterByCondition('all')">All</span>
+                                <span class="condition-badge-filter" onclick="filterByCondition('new')">New</span>
+                                <span class="condition-badge-filter" onclick="filterByCondition('like new')">Like New</span>
+                                <span class="condition-badge-filter" onclick="filterByCondition('good')">Good</span>
+                                <span class="condition-badge-filter" onclick="filterByCondition('fair')">Fair</span>
                             </div>
                         </div>
 
                         <!-- Location -->
                         <div class="filter-section">
                             <h6>Location</h6>
-                            <select class="form-select">
-                                <option>All Locations</option>
-                                <option>Library</option>
-                                <option>Science Building</option>
-                                <option>Residence Halls</option>
-                                <option>Student Center</option>
+                            <select class="form-select" id="locationFilter">
+                                <option value="all">All Locations</option>
+                                <option value="library">Library</option>
+                                <option value="science">Science Building</option>
+                                <option value="halls">Residence Halls</option>
+                                <option value="student">Student Center</option>
                             </select>
                         </div>
 
-                        <button class="btn-outline-custom w-100">Clear Filters</button>
+                        <button class="btn-outline-custom w-100" onclick="clearFilters()">Clear Filters</button>
                     </div>
                 </div>
 
@@ -765,23 +770,23 @@
                 <div class="col-lg-9">
                     <!-- Products Header -->
                     <div class="products-header">
-                        <span class="results-count">Showing 1-12 of 357 items</span>
-                        <select class="sort-select">
-                            <option>Newest First</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Most Popular</option>
+                        <span class="results-count" id="resultsCount">Showing 1-12 of 357 items</span>
+                        <select class="sort-select" id="sortSelect" onchange="sortProducts()">
+                            <option value="newest">Newest First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="popular">Most Popular</option>
                         </select>
                     </div>
 
-                    <!-- Product Grid - Shopify Style -->
-                    <div class="row">
+                    <!-- Product Grid -->
+                    <div class="row" id="productGrid">
                         <!-- Product Card 1 -->
                         <div class="col-md-4 col-6">
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">Like New</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1541963463532-d68292c34b19?w=500" 
@@ -790,7 +795,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Textbooks</div>
                                     <h5 class="product-title">
-                                        <a href="#">Calculus: Early Transcendentals</a>
+                                        <a href="product-detail.html?id=1">Calculus: Early Transcendentals</a>
                                     </h5>
                                     <div class="product-price">$25.99</div>
                                     <div class="product-meta">
@@ -798,9 +803,9 @@
                                         <span><i class="fas fa-eye"></i> 42 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=1" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=1" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -812,7 +817,7 @@
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">Good</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500" 
@@ -821,7 +826,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Electronics</div>
                                     <h5 class="product-title">
-                                        <a href="#">MacBook Air 2020 - 256GB</a>
+                                        <a href="product-detail.html?id=2">MacBook Air 2020 - 256GB</a>
                                     </h5>
                                     <div class="product-price">$699.99</div>
                                     <div class="product-meta">
@@ -829,9 +834,9 @@
                                         <span><i class="fas fa-eye"></i> 128 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=2" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=2" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -843,7 +848,7 @@
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">Good</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1592489661722-8d3f8eeba40d?w=500" 
@@ -852,7 +857,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Dorm Essentials</div>
                                     <h5 class="product-title">
-                                        <a href="#">Mini Fridge - 3.2 cu. ft.</a>
+                                        <a href="product-detail.html?id=3">Mini Fridge - 3.2 cu. ft.</a>
                                     </h5>
                                     <div class="product-price">$89.50</div>
                                     <div class="product-meta">
@@ -860,9 +865,9 @@
                                         <span><i class="fas fa-eye"></i> 56 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=3" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=3" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -874,7 +879,7 @@
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">Like New</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=500" 
@@ -883,7 +888,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Electronics</div>
                                     <h5 class="product-title">
-                                        <a href="#">TI-84 Plus Graphing Calculator</a>
+                                        <a href="product-detail.html?id=4">TI-84 Plus Graphing Calculator</a>
                                     </h5>
                                     <div class="product-price">$45.00</div>
                                     <div class="product-meta">
@@ -891,9 +896,9 @@
                                         <span><i class="fas fa-eye"></i> 31 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=4" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=4" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -905,7 +910,7 @@
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">New</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=500" 
@@ -914,7 +919,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Furniture</div>
                                     <h5 class="product-title">
-                                        <a href="#">LED Desk Lamp with USB</a>
+                                        <a href="product-detail.html?id=5">LED Desk Lamp with USB</a>
                                     </h5>
                                     <div class="product-price">$24.99</div>
                                     <div class="product-meta">
@@ -922,9 +927,9 @@
                                         <span><i class="fas fa-eye"></i> 23 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=5" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=5" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -936,7 +941,7 @@
                             <div class="product-card">
                                 <div class="product-image-wrapper">
                                     <span class="product-badge">Good</span>
-                                    <div class="product-wishlist">
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
                                         <i class="far fa-heart"></i>
                                     </div>
                                     <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500" 
@@ -945,7 +950,7 @@
                                 <div class="product-content">
                                     <div class="product-category">Clothing</div>
                                     <h5 class="product-title">
-                                        <a href="#">North Face Backpack</a>
+                                        <a href="product-detail.html?id=6">North Face Backpack</a>
                                     </h5>
                                     <div class="product-price">$35.00</div>
                                     <div class="product-meta">
@@ -953,9 +958,71 @@
                                         <span><i class="fas fa-eye"></i> 47 views</span>
                                     </div>
                                     <div class="product-actions">
-                                        <a href="#" class="btn-view">View Details</a>
-                                        <a href="#" class="btn-cart">
-                                            <i class="fas fa-shopping-cart"></i>
+                                        <a href="product-detail.html?id=6" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=6" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 7 -->
+                        <div class="col-md-4 col-6">
+                            <div class="product-card">
+                                <div class="product-image-wrapper">
+                                    <span class="product-badge">Like New</span>
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=500" 
+                                         class="product-image" alt="Laptop">
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">Electronics</div>
+                                    <h5 class="product-title">
+                                        <a href="product-detail.html?id=7">Dell XPS 13 Laptop</a>
+                                    </h5>
+                                    <div class="product-price">$899.99</div>
+                                    <div class="product-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> Library</span>
+                                        <span><i class="fas fa-eye"></i> 89 views</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="product-detail.html?id=7" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=7" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Product Card 8 -->
+                        <div class="col-md-4 col-6">
+                            <div class="product-card">
+                                <div class="product-image-wrapper">
+                                    <span class="product-badge">Fair</span>
+                                    <div class="product-wishlist" onclick="toggleWishlist(this)">
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                    <img src="https://images.unsplash.com/photo-1631545809320-84bdfdbac2b2?w=500" 
+                                         class="product-image" alt="Bicycle">
+                                </div>
+                                <div class="product-content">
+                                    <div class="product-category">Sports</div>
+                                    <h5 class="product-title">
+                                        <a href="product-detail.html?id=8">Mountain Bike</a>
+                                    </h5>
+                                    <div class="product-price">$120.00</div>
+                                    <div class="product-meta">
+                                        <span><i class="fas fa-map-marker-alt"></i> Sports Complex</span>
+                                        <span><i class="fas fa-eye"></i> 34 views</span>
+                                    </div>
+                                    <div class="product-actions">
+                                        <a href="product-detail.html?id=8" class="btn-view">View Details</a>
+                                        <a href="contact-seller.html?item=8" class="btn-cart" title="Contact Seller">
+                                            <i class="fas fa-envelope"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -969,13 +1036,13 @@
                             <li class="page-item disabled">
                                 <a class="page-link" href="#" tabindex="-1">Previous</a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item active"><a class="page-link" href="browse.html?page=1">1</a></li>
+                            <li class="page-item"><a class="page-link" href="browse.html?page=2">2</a></li>
+                            <li class="page-item"><a class="page-link" href="browse.html?page=3">3</a></li>
+                            <li class="page-item"><a class="page-link" href="browse.html?page=4">4</a></li>
+                            <li class="page-item"><a class="page-link" href="browse.html?page=5">5</a></li>
                             <li class="page-item">
-                                <a class="page-link" href="#">Next</a>
+                                <a class="page-link" href="browse.html?page=2">Next</a>
                             </li>
                         </ul>
                     </nav>
@@ -984,7 +1051,7 @@
         </div>
     </section>
 
-    <!-- Footer (same as homepage) -->
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -1015,11 +1082,11 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="footer-title">Policies</h5>
                     <ul class="footer-links">
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Safety Guidelines</a></li>
-                        <li><a href="#">Shipping Policy</a></li>
-                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="safety.html">Safety Guidelines</a></li>
+                        <li><a href="shipping.html">Shipping Policy</a></li>
+                        <li><a href="returns.html">Returns & Refunds</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 mb-4">
@@ -1043,30 +1110,98 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript for interactive features -->
     <script>
-        // Wishlist toggle
-        document.querySelectorAll('.product-wishlist').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                const icon = this.querySelector('i');
-                if (icon.classList.contains('far')) {
-                    icon.classList.remove('far');
-                    icon.classList.add('fas', 'text-danger');
-                } else {
-                    icon.classList.remove('fas', 'text-danger');
-                    icon.classList.add('far');
-                }
+        // Wishlist toggle function
+        function toggleWishlist(element) {
+            const icon = element.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas', 'text-danger');
+                showMessage('Added to wishlist!', 'success');
+            } else {
+                icon.classList.remove('fas', 'text-danger');
+                icon.classList.add('far');
+                showMessage('Removed from wishlist', 'info');
+            }
+        }
+
+        // Filter by condition
+        function filterByCondition(condition) {
+            // Update active state
+            document.querySelectorAll('.condition-badge-filter').forEach(b => {
+                b.classList.remove('active');
             });
+            event.target.classList.add('active');
+            
+            // Here you would filter products
+            showMessage(`Filtering by: ${condition}`, 'info');
+        }
+
+        // Apply price filter
+        function applyPriceFilter() {
+            const min = document.getElementById('minPrice').value;
+            const max = document.getElementById('maxPrice').value;
+            showMessage(`Filtering price: $${min} - $${max}`, 'info');
+        }
+
+        // Clear all filters
+        function clearFilters() {
+            // Reset checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            // Reset price inputs
+            document.getElementById('minPrice').value = 0;
+            document.getElementById('maxPrice').value = 1000;
+            
+            // Reset location
+            document.getElementById('locationFilter').value = 'all';
+            
+            // Reset condition badges
+            document.querySelectorAll('.condition-badge-filter').forEach(b => {
+                b.classList.remove('active');
+            });
+            document.querySelector('.condition-badge-filter').classList.add('active');
+            
+            showMessage('All filters cleared', 'success');
+        }
+
+        // Sort products
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
+            showMessage(`Sorting by: ${sortBy}`, 'info');
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value;
+                if (query.trim()) {
+                    window.location.href = `browse.html?search=${encodeURIComponent(query)}`;
+                }
+            }
         });
 
-        // Filter badges
-        document.querySelectorAll('.condition-badge-filter').forEach(badge => {
-            badge.addEventListener('click', function() {
-                document.querySelectorAll('.condition-badge-filter').forEach(b => 
-                    b.classList.remove('active')
-                );
-                this.classList.add('active');
-            });
+        // Show message function (simple alert replacement)
+        function showMessage(message, type) {
+            // You could create a nice toast notification here
+            console.log(message, type);
+            // For now, just alert (can be removed)
+            // alert(message);
+        }
+
+        // Update results count based on filters (demo)
+        function updateResultsCount() {
+            const count = document.getElementById('productGrid').children.length;
+            document.getElementById('resultsCount').textContent = `Showing 1-${count} of ${count} items`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateResultsCount();
         });
     </script>
 </body>
