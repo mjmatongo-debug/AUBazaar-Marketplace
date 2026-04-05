@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
         * {
             margin: 0;
@@ -32,7 +33,6 @@
             --au-red-dark: #9B152C;
         }
 
-        /* Simple Logo Only */
         .logo-container {
             position: absolute;
             top: 20px;
@@ -68,7 +68,6 @@
             color: var(--au-red);
         }
 
-        /* Login Card */
         .login-card {
             background: white;
             border-radius: 24px;
@@ -95,26 +94,6 @@
             font-size: 0.95rem;
         }
 
-        .welcome-back {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 12px;
-        }
-
-        .welcome-back .email {
-            font-weight: 600;
-            color: #333;
-            margin: 5px 0;
-        }
-
-        .welcome-back .account-type {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Form Styles */
         .form-group {
             margin-bottom: 20px;
         }
@@ -184,11 +163,6 @@
             border-color: #ccc;
         }
 
-        .btn-google img {
-            width: 20px;
-            height: 20px;
-        }
-
         .divider {
             text-align: center;
             margin: 20px 0;
@@ -231,10 +205,6 @@
             font-size: 0.9rem;
         }
 
-        .forgot-password a:hover {
-            text-decoration: underline;
-        }
-
         .signup-link {
             text-align: center;
             margin-top: 25px;
@@ -245,25 +215,6 @@
             color: var(--au-red);
             text-decoration: none;
             font-weight: 500;
-        }
-
-        .signup-link a:hover {
-            text-decoration: underline;
-        }
-
-        .different-account {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .different-account a {
-            color: #666;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .different-account a:hover {
-            color: var(--au-red);
         }
 
         .footer-links {
@@ -279,10 +230,6 @@
             margin: 0 10px;
         }
 
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-
         .alert {
             border-radius: 12px;
             padding: 12px;
@@ -294,18 +241,6 @@
             display: block;
         }
 
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-danger {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
         @media (max-width: 480px) {
             .login-card {
                 padding: 30px 20px;
@@ -314,26 +249,19 @@
     </style>
 </head>
 <body>
-    <!-- Simple Logo Only -->
     <div class="logo-container">
         <a href="index.html" class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-university"></i>
-            </div>
-            <div class="logo-text">
-                <span>AU</span>Bazaar
-            </div>
+            <div class="logo-icon"><i class="fas fa-university"></i></div>
+            <div class="logo-text"><span>AU</span>Bazaar</div>
         </a>
     </div>
 
-    <!-- Clean Login Card -->
     <div class="login-card">
         <div class="login-header">
             <h2>Welcome back</h2>
             <p>Sign in to continue to AUBazaar</p>
         </div>
 
-        <!-- Google Sign In -->
         <button class="btn-google" id="googleSignIn">
             <img src="https://www.google.com/favicon.ico" alt="Google">
             Continue with Google
@@ -343,48 +271,36 @@
             <span>or sign in with email</span>
         </div>
 
-        <!-- Login Form -->
+        <!-- Login Form – IDs match what main.js expects -->
         <form id="loginForm">
-            <!-- Email -->
             <div class="form-group">
                 <label class="form-label">University Email</label>
                 <input type="email" class="form-control" id="email" 
                        placeholder="your.name@africa.edu" required>
             </div>
             
-            <!-- Password -->
             <div class="form-group">
                 <label class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" 
                        placeholder="Enter your password" required>
             </div>
             
-            <!-- Forgot Password -->
             <div class="forgot-password">
                 <a href="#" id="forgotPassword">Reset your password</a>
             </div>
             
-            <!-- Message Area -->
             <div id="loginMessage" class="alert"></div>
             
-            <!-- Submit Button -->
             <button type="submit" class="btn-primary-custom" id="submitBtn">
                 Sign in
             </button>
             
-            <!-- Sign Up Link -->
             <div class="signup-link">
                 Don't have an account? <a href="register.html">Create account</a>
-            </div>
-            
-            <!-- Different Account -->
-            <div class="different-account">
-                <a href="#" id="differentEmail">Sign in with a different email address</a>
             </div>
         </form>
     </div>
 
-    <!-- Footer Links (like Adobe) -->
     <div class="footer-links">
         <a href="#">Terms of Use</a> | 
         <a href="#">Cookie preferences</a> | 
@@ -393,140 +309,18 @@
         <div style="margin-top: 10px;">Copyright © 2026 AUBazaar. All rights reserved.</div>
     </div>
 
-    <!-- Login JavaScript -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('loginForm');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const submitBtn = document.getElementById('submitBtn');
-        const messageDiv = document.getElementById('loginMessage');
-        const googleBtn = document.getElementById('googleSignIn');
-        const forgotBtn = document.getElementById('forgotPassword');
-        const differentEmail = document.getElementById('differentEmail');
-
-        // Check if user is ALREADY logged in - MODIFIED to prevent auto-redirect
-        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-        
-        // Don't auto-redirect - let them choose to logout first
-        if (isLoggedIn) {
-            // Just show a message instead of redirecting
-            messageDiv.className = 'alert alert-info show';
-            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>You are already logged in. <a href="index.html" style="color: var(--au-red);">Go to Home</a> or <a href="#" onclick="logout()" style="color: var(--au-red);">Logout</a>';
-        }
-
-        // Check for saved email
-        const savedEmail = localStorage.getItem('lastLoginEmail');
-        if (savedEmail) {
-            email.value = savedEmail;
-        }
-
-        // Check if user was redirected from register
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('registered') === 'success') {
-            messageDiv.className = 'alert alert-success show';
-            messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Registration successful! Please sign in.';
-        }
-
-        // Form submission
-        form.addEventListener('submit', function(e) {
+    <!-- Scripts: Bootstrap then main.js (which handles login via API) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+    <!-- Simple demo for Google/Forgot buttons (optional, won't break main.js) -->
+    <script>
+        document.getElementById('googleSignIn')?.addEventListener('click', function() {
+            alert('Google Sign In demo – use email/password instead.');
+        });
+        document.getElementById('forgotPassword')?.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const emailVal = email.value.trim();
-            const pwd = password.value;
-            
-            // Validation
-            if (!emailVal || !pwd) {
-                messageDiv.className = 'alert alert-danger show';
-                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please enter both email and password';
-                return;
-            }
-            
-            // Check if it's a university email
-            if (!emailVal.endsWith('@africa.edu') && !emailVal.endsWith('@students.africa.edu')) {
-                messageDiv.className = 'alert alert-danger show';
-                messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please use your Africa University email';
-                return;
-            }
-            
-            // Get users from localStorage
-            const users = JSON.parse(localStorage.getItem('aubazaarUsers') || '[]');
-            
-            // Find user
-            const user = users.find(u => u.email === emailVal && u.password === pwd);
-            
-            if (user) {
-                // Success
-                messageDiv.className = 'alert alert-success show';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Login successful! Redirecting...';
-                
-                // Save login state
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('lastLoginEmail', emailVal);
-                
-                submitBtn.disabled = true;
-                
-                // Redirect to homepage after 2 seconds
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-            } else {
-                // Check if email exists but password wrong
-                const emailExists = users.some(u => u.email === emailVal);
-                
-                if (emailExists) {
-                    messageDiv.className = 'alert alert-danger show';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Incorrect password. Please try again.';
-                } else {
-                    messageDiv.className = 'alert alert-danger show';
-                    messageDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>No account found with this email. <a href="register.html">Create one</a>';
-                }
-            }
+            alert('Password reset demo – please contact support.');
         });
-
-        // Google Sign In (demo)
-        googleBtn.addEventListener('click', function() {
-            messageDiv.className = 'alert alert-info show';
-            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Google Sign In would work here with proper setup';
-            
-            // Demo: Auto-fill with Google email
-            setTimeout(() => {
-                email.value = 'student@gmail.com';
-            }, 1000);
-        });
-
-        // Forgot Password (demo)
-        forgotBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            if (!email.value.trim()) {
-                messageDiv.className = 'alert alert-warning show';
-                messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Please enter your email first';
-            } else {
-                messageDiv.className = 'alert alert-success show';
-                messageDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Password reset link sent to ' + email.value;
-            }
-        });
-
-        // Different email
-        differentEmail.addEventListener('click', function(e) {
-            e.preventDefault();
-            email.value = '';
-            password.value = '';
-            email.focus();
-            
-            messageDiv.className = 'alert alert-info show';
-            messageDiv.innerHTML = '<i class="fas fa-info-circle me-2"></i>Enter a different email address';
-        });
-    });
-
-    // Logout function
-    function logout() {
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('currentUser');
-        window.location.reload();
-    }
-</script>
+    </script>
 </body>
 </html>
