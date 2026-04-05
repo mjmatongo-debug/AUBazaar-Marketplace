@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard - AUBazaar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+            padding-top: 80px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            height: 100%;
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #C41E3A;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        .item-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-sold {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .quick-add-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .listings-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .btn-primary-custom {
+            background: #C41E3A;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary-custom:hover {
+            background: #9B152C;
+            transform: translateY(-2px);
+        }
+        .btn-outline-custom {
+            background: transparent;
+            color: #C41E3A;
+            border: 2px solid #C41E3A;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <div class="logo">
+                    <div class="logo-icon"><i class="fas fa-university"></i></div>
+                    <div class="logo-text"><span>AU</span><span class="text-red">Bazaar</span></div>
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="browse.html">Browse</a></li>
+                    <li class="nav-item"><a class="nav-link" href="categories.html">Categories</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="seller-dashboard.html">Dashboard</a></li>
+                </ul>
+                <div class="d-flex gap-2" id="navAuth">
+                    <!-- Will be filled by main.js -->
+                    <a href="login.html" class="btn-outline-custom">Login</a>
+                    <a href="register.html" class="btn-primary-custom">Register</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 mb-0">Seller Dashboard</h1>
+            <a href="create-listing.html" class="btn-primary-custom">
+                <i class="fas fa-plus-circle me-2"></i>New Listing
+            </a>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4 g-3" id="statsRow">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalItems">0</div>
+                    <div class="stat-label">Total Items</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="activeItems">0</div>
+                    <div class="stat-label">Active Listings</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="soldItems">0</div>
+                    <div class="stat-label">Sold Items</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalViews">0</div>
+                    <div class="stat-label">Total Views</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Add Form -->
+        <div class="quick-add-card">
+            <h5 class="mb-3"><i class="fas fa-bolt text-warning me-2"></i>Quick Add Item</h5>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <input type="text" id="quickTitle" class="form-control" placeholder="Item title">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" id="quickPrice" class="form-control" placeholder="Price">
+                </div>
+                <div class="col-md-3">
+                    <select id="quickCategory" class="form-select">
+                        <option>Textbooks</option>
+                        <option>Electronics</option>
+                        <option>Furniture</option>
+                        <option>Clothing</option>
+                        <option>Dorm Essentials</option>
+                        <option>Sports</option>
+                        <option>Services</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn-primary-custom w-100" onclick="quickAddItem()">
+                        <i class="fas fa-plus me-1"></i>Post Item
+                    </button>
+                </div>
+            </div>
+            <div id="quickAddMessage" class="small text-muted mt-2"></div>
+        </div>
+
+        <!-- My Listings Table -->
+        <div class="listings-card">
+            <h5 class="mb-3">My Listings</h5>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Image</th><th>Title</th><th>Price</th><th>Status</th><th>Views</th><th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listingsTable">
+                        <tr><td colspan="6" class="text-center py-4">Loading your items...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="footer-bottom text-center py-3">
+                &copy; 2025 AUBazaar - Africa University. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let token = localStorage.getItem('aubazaar_token');
+
+        // Redirect if not logged in
+        if (!token) {
+            window.location.href = 'login.html?redirect=seller-dashboard.html';
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Get user profile with listings
+                const profileRes = await fetch(`${API_BASE}/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (!profileRes.ok) throw new Error('Not authenticated');
+                const profileData = await profileRes.json();
+                const listings = profileData.listings || [];
+                
+                // Calculate stats
+                const total = listings.length;
+                const active = listings.filter(l => l.status === 'active').length;
+                const sold = listings.filter(l => l.status === 'sold').length;
+                const views = listings.reduce((sum, l) => sum + (l.view_count || 0), 0);
+                
+                document.getElementById('totalItems').innerText = total;
+                document.getElementById('activeItems').innerText = active;
+                document.getElementById('soldItems').innerText = sold;
+                document.getElementById('totalViews').innerText = views;
+                
+                renderListingsTable(listings);
+            } catch (err) {
+                console.error(err);
+                document.getElementById('listingsTable').innerHTML = '<tr><td colspan="6" class="text-center text-danger">Failed to load. Please login again.</td></tr>';
+                localStorage.removeItem('aubazaar_token');
+                setTimeout(() => window.location.href = 'login.html', 2000);
+            }
+        }
+
+        // Render listings table
+        function renderListingsTable(listings) {
+            const tbody = document.getElementById('listingsTable');
+            if (!listings.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center py-4">No items yet. Create your first listing!</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            listings.forEach(item => {
+                let images = [];
+                try { images = JSON.parse(item.images) || []; } catch(e) { images = []; }
+                const imgUrl = images.length ? images[0] : 'https://via.placeholder.com/60?text=No+Image';
+                const statusClass = item.status === 'active' ? 'status-active' : 'status-sold';
+                const statusText = item.status === 'active' ? 'Active' : 'Sold';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${imgUrl}" class="item-img" onerror="this.src='https://via.placeholder.com/60'"></td>
+                    <td><strong>${escapeHtml(item.title)}</strong><br><small class="text-muted">${item.category || 'Uncategorized'}</small></td>
+                    <td>$${parseFloat(item.price).toFixed(2)}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>${item.view_count || 0}</td>
+                    <td>
+                        ${item.status !== 'sold' ? `<button class="btn btn-sm btn-success me-1" onclick="markAsSold(${item.id})">Sold</button>` : ''}
+                        <button class="btn btn-sm btn-danger" onclick="deleteItem(${item.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Mark item as sold
+        window.markAsSold = async (id) => {
+            if (!confirm('Mark this item as sold?')) return;
+            try {
+                const res = await fetch(`${API_BASE}/listings/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ status: 'sold' })
+                });
+                if (res.ok) {
+                    loadDashboard();
+                    showToast('Item marked as sold!', 'success');
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Failed to update');
+                }
+            } catch (err) {
+                alert('Server error');
+            }
+        };
+
+        // Delete item
+        window.deleteItem = async (id) => {
+            if (!confirm('Permanently delete this item?')) return;
+            try {
+                const res = await fetch(`${API_BASE}/listings/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    loadDashboard();
+                    showToast('Item deleted', 'warning');
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Delete failed');
+                }
+            } catch (err) {
+                alert('Server error');
+            }
+        };
+
+        // Quick add item
+        window.quickAddItem = async () => {
+            const title = document.getElementById('quickTitle').value.trim();
+            const price = document.getElementById('quickPrice').value;
+            const category = document.getElementById('quickCategory').value;
+            if (!title || !price) {
+                document.getElementById('quickAddMessage').innerHTML = '<span class="text-danger">Title and price required</span>';
+                return;
+            }
+            document.getElementById('quickAddMessage').innerHTML = '<span class="text-info">Posting...</span>';
+            
+            const formData = new FormData();
+            formData.append('title', title);
+            formData.append('price', parseFloat(price));
+            formData.append('category', category);
+            formData.append('description', 'Quick add item');
+            formData.append('condition', 'good');
+            formData.append('location', 'Campus');
+            
+            try {
+                const res = await fetch(`${API_BASE}/listings`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                if (res.ok) {
+                    document.getElementById('quickTitle').value = '';
+                    document.getElementById('quickPrice').value = '';
+                    document.getElementById('quickAddMessage').innerHTML = '<span class="text-success">Item added! Refresh list...</span>';
+                    loadDashboard();
+                    setTimeout(() => document.getElementById('quickAddMessage').innerHTML = '', 2000);
+                } else {
+                    const err = await res.json();
+                    document.getElementById('quickAddMessage').innerHTML = `<span class="text-danger">${err.error || 'Failed'}</span>`;
+                }
+            } catch (err) {
+                document.getElementById('quickAddMessage').innerHTML = '<span class="text-danger">Server error</span>';
+            }
+        };
+
+        // Helper: escape HTML to prevent XSS
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Simple toast notification
+        function showToast(msg, type) {
+            const toast = document.createElement('div');
+            toast.className = `position-fixed bottom-0 end-0 m-3 alert alert-${type === 'success' ? 'success' : 'danger'} shadow`;
+            toast.style.zIndex = 9999;
+            toast.innerHTML = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+        });
+    </script>
+</body>
+</html>
